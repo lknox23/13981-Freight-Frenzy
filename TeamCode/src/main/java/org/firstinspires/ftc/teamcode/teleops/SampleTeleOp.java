@@ -22,9 +22,7 @@ public class SampleTeleOp extends BaseRobot {
     }
 
     @Override
-    public void start() {
-        super.start();
-    }
+    public void start() { super.start(); }
 
     @Override
     public void loop() {

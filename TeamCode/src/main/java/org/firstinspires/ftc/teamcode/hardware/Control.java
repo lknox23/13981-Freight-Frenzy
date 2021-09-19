@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode.hardware;
 import com.qualcomm.robotcore.hardware.*;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.teamcode.ConstantVariables;
+
 public class Control extends Devices {
 
 
