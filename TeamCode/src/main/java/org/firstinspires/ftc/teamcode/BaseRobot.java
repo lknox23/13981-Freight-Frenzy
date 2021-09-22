@@ -8,6 +8,8 @@ import org.firstinspires.ftc.teamcode.hardware.*;
 
 /**
  * Template created by Ayaan Govil on 8/21/2021
+ *
+ * FTC Java Documentation: http://ftctechnh.github.io/ftc_app/doc/javadoc/index.html
  */
 
 // basebot serves as the first execution point before flowing into the teleop/auto
@@ -18,7 +20,7 @@ public class BaseRobot extends OpMode {
     // this function runs when you hit the start button on the app
     @Override
     public void init() {
-        // map the devices
+        // map the devices initialized in the Devices class
         // NOTE: deviceName should be the same as the name specified on the configuration
         Devices.leftBackDriveMotor = hardwareMap.get(DcMotor.class, "leftBackDriveMotor");
         Devices.rightBackDriveMotor = hardwareMap.get(DcMotor.class, "rightBackDriveMotor");
