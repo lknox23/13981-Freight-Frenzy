@@ -32,19 +32,12 @@ public class SampleTeleOp extends BaseRobot {
         Control.tankanumDrive(gamepad1.right_stick_y, gamepad1.left_stick_y, gamepad1.right_stick_x);
 
         // control armLiftMotor
-        if (gamepad1.dpad_down || gamepad1.a) {
-            Control.moveMotor(Devices.armLiftMotor, 1.0);
-        } else if (gamepad1.dpad_up || gamepad1.b) {
-            Control.moveMotor(Devices.armLiftMotor, -1.0);
-        } else {
-            Control.moveMotor(Devices.armLiftMotor, 0.0);
-        }
-
-        // control armClampServo
-        if (gamepad1.left_trigger > 0.0 || gamepad1.left_bumper) {
-            Control.setServoPosition(Devices.armClampServo, 0.0);
-        } else if (gamepad1.right_trigger > 0.0 || gamepad1.right_bumper) {
-            Control.setServoPosition(Devices.armClampServo, 1.0);
-        }
+//        if (gamepad1.dpad_down || gamepad1.a) {
+//            Control.moveMotor(Devices.armLiftMotor, 1.0);
+//        } else if (gamepad1.dpad_up || gamepad1.b) {
+//            Control.moveMotor(Devices.armLiftMotor, -1.0);
+//        } else {
+//            Control.moveMotor(Devices.armLiftMotor, 0.0);
+//        }
     }
 }

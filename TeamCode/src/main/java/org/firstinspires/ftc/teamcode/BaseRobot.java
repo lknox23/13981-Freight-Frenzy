@@ -1,49 +1,40 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.*;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.hardware.*;
 
 /**
- * Template created by Ayaan Govil on 8/21/2021
+ * Template created by Ayaan Govil on 8/21/2021. Last updated on 10/7/21.
  *
  * FTC Java Documentation: http://ftctechnh.github.io/ftc_app/doc/javadoc/index.html
  */
 
-// basebot serves as the first execution point before flowing into the teleop/auto
+// basebot serves as the first execution point before flowing into the teleop
 
 public class BaseRobot extends OpMode {
-    public ElapsedTime timer = new ElapsedTime();
-
-    // this function runs when you hit the start button on the app
+    // this function runs when you hit the init button on the app
     @Override
     public void init() {
-        // map the devices initialized in the Devices class
-        // NOTE: deviceName should be the same as the name specified on the configuration
-        Devices.leftBackDriveMotor = hardwareMap.get(DcMotor.class, "leftBackDriveMotor");
-        Devices.rightBackDriveMotor = hardwareMap.get(DcMotor.class, "rightBackDriveMotor");
-        Devices.leftFrontDriveMotor = hardwareMap.get(DcMotor.class, "leftFrontDriveMotor");
-        Devices.rightFrontDriveMotor = hardwareMap.get(DcMotor.class, "rightFrontDriveMotor");
-
-        Devices.armLiftMotor = hardwareMap.get(DcMotor.class, "armLiftMotor");
-        Devices.armClampServo = hardwareMap.get(Servo.class,"armClampServo");
+        // map and initialize devices
+        Devices.initDevices(hardwareMap);
     }
 
-    // this function runs when you hit init after the start button
+    // this function runs when you hit the start button after the init button
     @Override
     public void start() {
-        timer.reset();
-        Encoders.resetDriveEncs();
-        Encoders.resetMotorEnc(Devices.armLiftMotor);
+
     }
 
     // this function runs when you hit the stop button
+    @Override
     public void stop() {
-        timer.reset();
-        Encoders.resetDriveEncs();
-        Encoders.resetMotorEnc(Devices.armLiftMotor);
+
     }
 
     // this function loops while the bot is running
