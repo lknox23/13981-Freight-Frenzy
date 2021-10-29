@@ -52,6 +52,42 @@ public class Control extends Devices {
             return;
         }
     }
+    public static class pid {
+        private ElapsedTime runtime;
+        private double oldError;
+        private double oldIntegral;
+        private double oldTime;
+
+        public pid() {
+            ElapsedTime runtime = new ElapsedTime();
+            oldError = 0;
+            oldIntegral = 0;
+            oldTime = 0;
+        }
+
+        public double rotateWithPid(double goalAngle, double currentEncoderReading) {
+
+            double integral;
+            double derivative;
+
+            double currentAngle = currentEncoderReading/ConstantVariables.ARM_ROTATE_PPR* 360;
+            double error = goalAngle-currentAngle;
+            double dT = runtime.milliseconds()-oldTime;
+
+            if(Math.abs(error)>ConstantVariables.K_INTEGRAL_RESET_THRESHOLD)
+                oldIntegral = 0;
+
+            integral = oldIntegral + error * dT;
+            derivative = (error-oldError);
+
+            oldError = error;
+            oldIntegral = integral;
+            oldTime = runtime.milliseconds();
+
+            return ConstantVariables.K_P*error + ConstantVariables.K_I*integral + ConstantVariables.K_D*derivative;
+        }
+    }
+
 
     public static class drive {
 

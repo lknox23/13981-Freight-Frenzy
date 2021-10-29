@@ -42,4 +42,13 @@ public class ConstantVariables {
     public static final long PIXY_MAX_X = 255L;
     public static final long PIXY_MIN_Y = 0L;
     public static final long PIXY_MAX_Y = 199L;
+
+    public static final double ARM_ROTATE_PPR = 288; //encoder counts per rotation of arm rotator
+
+    public static final double K_P = 1;
+    public static final double K_I = 0;
+    public static final double K_D = 0;
+
+    public static final double K_INTEGRAL_RESET_THRESHOLD = 0.1;
+
 }
