@@ -17,9 +17,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
-import org.firstinspires.ftc.teamcode.hardware.ConstantVariables;
-import org.firstinspires.ftc.teamcode.hardware.Devices;
-import org.firstinspires.ftc.teamcode.hardware.Encoders;
 
 import java.util.List;
 
@@ -38,18 +35,39 @@ public class Control extends Devices {
             double speed = Range.clip(power, -1.0, 1.0);
             motor.setPower(speed);
         }
+
+        public static void linearSlideSetPosition(DcMotor motor, int targetPosition) {
+            double power = 1.0;
+            if (Encoders.getMotorEnc(motor) > targetPosition) power = -1.0;
+
+            motor.setTargetPosition(targetPosition);
+            motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+            motor.setPower(power);
+            while (motor.isBusy()) {
+            }
+            motor.setPower(0);
+
+            return;
+        }
     }
 
     public static class drive {
 
         public static void configureDriveMotors() {
-            rightFrontDriveMotor.setDirection(DcMotor.Direction.REVERSE);
-            rightBackDriveMotor.setDirection(DcMotor.Direction.REVERSE);
+            rightFrontDriveMotor.setDirection(DcMotorEx.Direction.REVERSE);
+            rightBackDriveMotor.setDirection(DcMotorEx.Direction.REVERSE);
 
-            leftFrontDriveMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            leftBackDriveMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            rightFrontDriveMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            rightBackDriveMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            leftFrontDriveMotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+            leftBackDriveMotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+            rightFrontDriveMotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+            rightBackDriveMotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+
+            leftFrontDriveMotor.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+            leftBackDriveMotor.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+            rightFrontDriveMotor.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+            rightBackDriveMotor.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         }
 
         // drive with each side correlating to gamepad sticks
@@ -94,6 +112,36 @@ public class Control extends Devices {
     }
 
     public static class auto {
+
+        public static void spinCarousel(DcMotor motor) {
+            int shiftValue = 1000; // increase/decrease depending on how long you want the motor to spin
+            int targetPosition = Encoders.getMotorEnc(motor) + shiftValue;
+
+            motor.setTargetPosition(targetPosition);
+            motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+            motor.setPower(1.0);
+            while (motor.isBusy()) {
+            }
+            motor.setPower(0);
+
+            Encoders.resetMotorEnc(motor);
+        }
+
+//        double power = 1.0;
+//        int targetPosition = stageIndex * 500;
+//            if (Encoders.getMotorEnc(motor) > targetPosition) power = -1.0;
+//
+//            motor.setTargetPosition(targetPosition);
+//            motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//            motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//
+//            motor.setPower(power);
+//            while (motor.isBusy()) { }
+//            motor.setPower(0);
+//
+//            return;
 
         // old method of autonomous drive, only use in iterative autos
 //        public static boolean drive(double inches, double power) {
@@ -146,10 +194,10 @@ public class Control extends Devices {
             double conversion = ConstantVariables.COUNTS_PER_INCH * ConstantVariables.BIAS;
             int move = (int) (Math.round(inches * conversion));
 
-            leftFrontDriveMotor.setTargetPosition(leftBackDriveMotor.getCurrentPosition() + move);
-            leftBackDriveMotor.setTargetPosition(leftFrontDriveMotor.getCurrentPosition() + move);
-            rightFrontDriveMotor.setTargetPosition(rightBackDriveMotor.getCurrentPosition() + move);
-            rightBackDriveMotor.setTargetPosition(rightFrontDriveMotor.getCurrentPosition() + move);
+            leftFrontDriveMotor.setTargetPosition(leftFrontDriveMotor.getCurrentPosition() + move);
+            leftBackDriveMotor.setTargetPosition(leftBackDriveMotor.getCurrentPosition() + move);
+            rightFrontDriveMotor.setTargetPosition(rightFrontDriveMotor.getCurrentPosition() + move);
+            rightBackDriveMotor.setTargetPosition(rightBackDriveMotor.getCurrentPosition() + move);
 
             Encoders.driveRunToPosition();
 
@@ -159,7 +207,6 @@ public class Control extends Devices {
             rightBackDriveMotor.setPower(speed);
 
             while (leftFrontDriveMotor.isBusy() && leftBackDriveMotor.isBusy() && rightFrontDriveMotor.isBusy() && rightBackDriveMotor.isBusy()) {
-
             }
 
             drive.stopPower();
