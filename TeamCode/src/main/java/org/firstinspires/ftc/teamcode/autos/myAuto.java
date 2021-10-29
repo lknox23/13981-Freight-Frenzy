@@ -2,12 +2,11 @@ package org.firstinspires.ftc.teamcode.autos;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-
-import org.firstinspires.ftc.teamcode.BaseRobot;
+import com.qualcomm.robotcore.hardware.*;
 
 
 public class myAuto extends LinearOpMode {
-    int stage = 0;
+
     /*
      * Steps:
      * 1. Deliver preloaded box to alliance shipping hub
@@ -21,6 +20,16 @@ public class myAuto extends LinearOpMode {
 
 
 
+
+    }
+
+    public void shippingHub(){
+
+    }
+    public void deliverDucks(){
+
+    }
+    public void park(){
 
     }
 }
