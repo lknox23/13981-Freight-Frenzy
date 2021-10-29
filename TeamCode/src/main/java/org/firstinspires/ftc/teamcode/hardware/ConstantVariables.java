@@ -28,4 +28,18 @@ public class ConstantVariables {
     public static final double K_MAX_CLIBER = 1465;
 
     public static final double K_DRIVE_ERROR_P = 250; // higher = less sensitive
+
+    public static final byte   PIXY_INITIAL_ARRAYSIZE = 0;
+    public static final short PIXY_MAXIMUM_ARRAYSIZE = 130;
+    public static final int PIXY_START_WORD = 0xaa55; //for regular color recognition
+    public static final int PIXY_START_WORD_CC = 0xaa56; //for color code - angle rotation recognition
+    public static final int PIXY_START_WORDX = 0x55aa; //regular color another way around
+    public static final byte PIXY_MAX_SIGNATURE = 7;
+    public static final int PIXY_DEFAULT_ARGVAL = 0xffff;
+
+    // Pixy x-y position values
+    public static final long PIXY_MIN_X = 0L;   //x: 0~255 pixels, y:0~199 pixels. (0,0) starts at bottom left
+    public static final long PIXY_MAX_X = 255L;
+    public static final long PIXY_MIN_Y = 0L;
+    public static final long PIXY_MAX_Y = 199L;
 }
