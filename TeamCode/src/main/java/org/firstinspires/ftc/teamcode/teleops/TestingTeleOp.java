@@ -77,13 +77,13 @@ public class TestingTeleOp extends BaseRobot {
         if (gamepad1.dpad_left) {
             intake.setPosition(0);
         } else if (gamepad1.dpad_right) {
-            intake.setPosition(1);
+            intake.setPosition(1.0);
         }
 
         if(gamepad1.x) {
-            boxMover.setPosition(1);
-        } else if (gamepad1.b) {
             boxMover.setPosition(0);
+        } else if (gamepad1.b) {
+            boxMover.setPosition(1.0);
         }
 
         telemetry.addData("arm econder reading 1: ", armLiftMotor1.getCurrentPosition());

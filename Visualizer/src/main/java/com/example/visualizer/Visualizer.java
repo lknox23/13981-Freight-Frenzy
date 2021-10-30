@@ -33,7 +33,9 @@ public class Visualizer {
 
                                  */
                                 .splineTo(new Vector2d(-13, -40), Math.toRadians(90))
-                                .splineTo(new Vector2d(-61, -55), Math.toRadians(90))
+                                .setReversed(true)
+                                .splineTo(new Vector2d(-61, -55), Math.toRadians(-90))
+                                .setReversed(false)
                                 .splineTo(new Vector2d(38, -61), Math.toRadians(0))
                                 .build()
                 )
