@@ -23,12 +23,18 @@ public class Visualizer {
                 .setConstraints(68.88, 68.88, Math.toRadians(180), Math.toRadians(180), 12.5)
                 .followTrajectorySequence(drive ->
                         drive.trajectorySequenceBuilder(new Pose2d(-35, -61, Math.toRadians(90)))
+                                /*
                                 .splineTo(new Vector2d(-11, -47), Math.toRadians(90))
                                 .strafeLeft(24)
                                 .strafeRight(24)
                                 .strafeLeft(49)
                                 .forward(-13)
                                 .forward(25)
+
+                                 */
+                                .splineTo(new Vector2d(-13, -40), Math.toRadians(90))
+                                .splineTo(new Vector2d(-61, -55), Math.toRadians(90))
+                                .splineTo(new Vector2d(38, -61), Math.toRadians(0))
                                 .build()
                 )
                 .start();

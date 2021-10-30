@@ -6,6 +6,7 @@ import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.*;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
@@ -26,7 +27,7 @@ public class myAuto extends LinearOpMode {
 
     int duckPositionIndex;
     SampleTankDrive drive;
-
+    double coeff=1;
     @Override
     public void runOpMode() {
         initializeStuff();
@@ -42,7 +43,7 @@ public class myAuto extends LinearOpMode {
         }, 1.0, hardwareMap);
         Control.sensor.initGyro();
         drive = new SampleTankDrive(hardwareMap);
-        drive.setPoseEstimate(new Pose2d(10, 10, Math.toRadians(90)));
+        drive.setPoseEstimate(new Pose2d(10*coeff, 10*coeff, Math.toRadians(90)));
     }
 
     public void detectDucks() {
@@ -54,7 +55,7 @@ public class myAuto extends LinearOpMode {
 
     public void goToShippingHub(){
         Trajectory traj1 = drive.trajectoryBuilder(new Pose2d())
-                .splineTo(new Vector2d(20, 20), Math.toRadians(90))
+                .splineTo(new Vector2d(-13, -40), Math.toRadians(90))
                 .build();
         drive.followTrajectory(traj1);
     }
@@ -64,13 +65,32 @@ public class myAuto extends LinearOpMode {
     }
 
     public void goToCarousel() {
+        Trajectory traj2 = drive.trajectoryBuilder(new Pose2d(), true)
+                .splineTo(new Vector2d(-61, -55), Math.toRadians(90))
+                .build();
+        drive.followTrajectory(traj2);
 
     }
 
-    public void deliverDucks(){
+    public void deliverDucks() {
+        ElapsedTime runtime;
+        runtime = new ElapsedTime();
+        double oldTime;
+        oldTime = 0;
+        double dT = runtime.milliseconds() - oldTime;
 
+        while (dT <= 2000) {
+            dT = runtime.milliseconds() - oldTime;
+            Control.motor.moveMotor(Devices.spinner, 0.5);
+        }
     }
+
     public void park(){
+        Trajectory traj3 = drive.trajectoryBuilder(new Pose2d())
+                .splineTo(new Vector2d(38, -61), Math.toRadians(0))
+                .build();
+        drive.followTrajectory(traj3);
+
 
     }
 }
