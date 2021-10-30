@@ -59,7 +59,7 @@ public class Control extends Devices {
         private double oldTime;
 
         public pid() {
-            ElapsedTime runtime = new ElapsedTime();
+            runtime = new ElapsedTime();
             oldError = 0;
             oldIntegral = 0;
             oldTime = 0;

@@ -16,15 +16,16 @@ public class PidSample extends BaseRobot {
     double currentAngle;
     double output;
     public void init() {
+        super.init();
         armController  = new Control.pid();
     }
 
     public void loop() {
-
-        if(gamepad1.a) {
+        super.loop();
+        if(gamepad1.b) {
 
             currentAngle = Encoders.getMotorEnc(armLiftMotor1);
-            output = armController.rotateWithPid(10, currentAngle);
+            output = -armController.rotateWithPid(10, currentAngle);
             Control.motor.moveMotor(armLiftMotor1, output);
             Control.motor.moveMotor(armLiftMotor2, output);
         } else {

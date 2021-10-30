@@ -45,7 +45,7 @@ public class ConstantVariables {
 
     public static final double ARM_ROTATE_PPR = 288; //encoder counts per rotation of arm rotator
 
-    public static final double K_P = 1;
+    public static final double K_P = 2;
     public static final double K_I = 0;
     public static final double K_D = 0;
 

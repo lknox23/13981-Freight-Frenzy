@@ -9,7 +9,8 @@ import org.firstinspires.ftc.teamcode.hardware.Devices;
 
 import static org.firstinspires.ftc.teamcode.hardware.Devices.armLiftMotor1;
 import static org.firstinspires.ftc.teamcode.hardware.Devices.armLiftMotor2;
-import static org.firstinspires.ftc.teamcode.hardware.Devices.intakeServo;
+import static org.firstinspires.ftc.teamcode.hardware.Devices.boxMover;
+import static org.firstinspires.ftc.teamcode.hardware.Devices.intake;
 import static org.firstinspires.ftc.teamcode.hardware.Devices.slideLiftMotor;
 import static org.firstinspires.ftc.teamcode.hardware.Devices.spinner;
 
@@ -67,18 +68,23 @@ public class TestingTeleOp extends BaseRobot {
         //control spinner
         if (gamepad1.a)
             Control.motor.moveMotor(spinner, 1);
-        else if (gamepad1.b)
-            Control.motor.moveMotor(spinner, -1);
+        //else if (gamepad1.b)
+            //Control.motor.moveMotor(spinner, -1);
         else
             Control.motor.moveMotor(spinner, 0);
 
         //intake
         if (gamepad1.dpad_left) {
-            intakeServo.setPosition(0);
+            intake.setPosition(0);
         } else if (gamepad1.dpad_right) {
-            intakeServo.setPosition(1);
+            intake.setPosition(1);
         }
 
+        if(gamepad1.x) {
+            boxMover.setPosition(1);
+        } else if (gamepad1.b) {
+            boxMover.setPosition(0);
+        }
 
         telemetry.addData("arm econder reading 1: ", armLiftMotor1.getCurrentPosition());
         telemetry.addData("arm econder reading 2: ", armLiftMotor2.getCurrentPosition());
