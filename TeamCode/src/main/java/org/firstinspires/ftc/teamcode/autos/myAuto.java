@@ -66,7 +66,7 @@ public class myAuto extends LinearOpMode {
 
     public void goToCarousel() {
         Trajectory traj2 = drive.trajectoryBuilder(new Pose2d(), true)
-                .splineTo(new Vector2d(-61, -55), Math.toRadians(90))
+                .splineTo(new Vector2d(-60, -60), Math.toRadians(180))
                 .build();
         drive.followTrajectory(traj2);
 
@@ -87,7 +87,7 @@ public class myAuto extends LinearOpMode {
 
     public void park(){
         Trajectory traj3 = drive.trajectoryBuilder(new Pose2d())
-                .splineTo(new Vector2d(38, -61), Math.toRadians(0))
+                .splineTo(new Vector2d(38, -45), Math.toRadians(0))
                 .build();
         drive.followTrajectory(traj3);
 
