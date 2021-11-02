@@ -35,8 +35,6 @@ public class Visualizer {
                                 .setReversed(true)
                                 .splineTo(new Vector2d(-60, -60), Math.toRadians(180))
                                 .setReversed(false)
-                                .waitSeconds(0.5)
-                                //.forward(98)
                                 .splineTo(new Vector2d(38, -45), Math.toRadians(0))
                                 .build()
                 )

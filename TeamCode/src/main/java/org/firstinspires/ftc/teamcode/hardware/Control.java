@@ -65,13 +65,13 @@ public class Control extends Devices {
             oldTime = 0;
         }
 
-        public double rotateWithPid(double goalAngle, double currentEncoderReading) {
+        public double rotateWithPid(double goalPosition, double currentPosition) {
 
             double integral;
             double derivative;
 
-            double currentAngle = currentEncoderReading/ConstantVariables.ARM_ROTATE_PPR* 360;
-            double error = goalAngle-currentAngle;
+
+            double error = goalPosition-currentPosition;
             double dT = runtime.milliseconds()-oldTime;
 
             if(Math.abs(error)>ConstantVariables.K_INTEGRAL_RESET_THRESHOLD)
@@ -86,6 +86,8 @@ public class Control extends Devices {
 
             return ConstantVariables.K_P*error + ConstantVariables.K_I*integral + ConstantVariables.K_D*derivative;
         }
+
+
     }
 
 
@@ -148,6 +150,10 @@ public class Control extends Devices {
     }
 
     public static class auto {
+
+        public static double armEncoderToAngle(double encoderReading) {
+            return encoderReading/ConstantVariables.ARM_ROTATE_PPR* 360;
+        }
 
         public static void spinCarousel(DcMotor motor) {
             int shiftValue = 1000; // increase/decrease depending on how long you want the motor to spin
