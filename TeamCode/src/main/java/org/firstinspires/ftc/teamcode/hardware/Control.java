@@ -8,8 +8,6 @@ import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
@@ -86,8 +84,9 @@ public class Control extends Devices {
 
             return ConstantVariables.K_P*error + ConstantVariables.K_I*integral + ConstantVariables.K_D*derivative;
         }
-
-
+        public double getSpeed(double goalPosition, double currentPosition) {
+            return ((goalPosition-currentPosition)-oldError)/(runtime.milliseconds()-oldTime);
+        }
     }
 
 
@@ -152,7 +151,7 @@ public class Control extends Devices {
     public static class auto {
 
         public static double armEncoderToAngle(double encoderReading) {
-            return encoderReading/ConstantVariables.ARM_ROTATE_PPR* 360*ConstantVariables.ARM_GEAR_RATIO;
+            return encoderReading/ConstantVariables.K_ARM_ROTATE_PPR * 360*ConstantVariables.K_ARM_GEAR_RATIO;
         }
 
         public static void spinCarousel(DcMotor motor) {

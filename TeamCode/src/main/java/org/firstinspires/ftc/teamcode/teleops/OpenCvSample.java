@@ -20,7 +20,6 @@ import org.openftc.easyopencv.OpenCvWebcam;
 
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 
-//import static org.firstinspires.ftc.teamcode.hardware.Control.OpenCvTelemetry;
 
 @TeleOp
 public class OpenCvSample extends LinearOpMode {

@@ -17,7 +17,9 @@ import static org.firstinspires.ftc.teamcode.hardware.Devices.spinner;
 //testing 123
 public class TestingTeleOp extends BaseRobot {
     double currentAngle;
+    double restPosition;
     Control.pid armController;
+
     @Override
     public void init() {
         super.init();
@@ -40,11 +42,14 @@ public class TestingTeleOp extends BaseRobot {
         if (gamepad1.dpad_up && currentAngle<135) {
                 double output = armController.rotateWithPid(90, (currentAngle));
                 Control.motor.moveMotor(Devices.armLiftMotor1, 1);
+                restPosition = currentAngle;
         } else if (gamepad1.dpad_down &&currentAngle>-30) {
                 double output = armController.rotateWithPid(0, currentAngle);
                 Control.motor.moveMotor(Devices.armLiftMotor1, -1);
+                restPosition = currentAngle;
         } else {
-            Control.motor.moveMotor(Devices.armLiftMotor1, 0);
+                double output = armController.rotateWithPid(restPosition, currentAngle);
+            Control.motor.moveMotor(Devices.armLiftMotor1, output);
         }
 
         //control arm extension
@@ -78,7 +83,7 @@ public class TestingTeleOp extends BaseRobot {
 
         telemetry.addData("arm econder reading 1: ", armLiftMotor1.getCurrentPosition());
         telemetry.addData("arm extender encoder reading: ", slideLiftMotor.getCurrentPosition());
-        currentAngle = armLiftMotor1.getCurrentPosition()/ ConstantVariables.ARM_ROTATE_PPR* 360 * ConstantVariables.ARM_GEAR_RATIO;
+        currentAngle = armLiftMotor1.getCurrentPosition()/ ConstantVariables.K_ARM_ROTATE_PPR * 360 * ConstantVariables.K_ARM_GEAR_RATIO;
         telemetry.addData("current angle: ", currentAngle);
     }
 }
