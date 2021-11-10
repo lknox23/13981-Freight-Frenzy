@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.autos;
 
 
+import static org.firstinspires.ftc.teamcode.hardware.Devices.armLiftMotor1;
+
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
@@ -14,6 +16,7 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.drive.SampleTankDrive;
 import org.firstinspires.ftc.teamcode.hardware.Control;
 import org.firstinspires.ftc.teamcode.hardware.Devices;
+import org.firstinspires.ftc.teamcode.hardware.Encoders;
 
 
 public class myAuto extends LinearOpMode {
@@ -61,6 +64,21 @@ public class myAuto extends LinearOpMode {
     }
 
     public void placePreloaded() {
+        double currentAngle = Control.auto.armEncoderToAngle(Encoders.getMotorEnc(armLiftMotor1));
+        double output;
+
+        Control.pid armController = new Control.pid();
+
+        while (armController.getSpeed(90, currentAngle) > 5){
+            currentAngle = Control.auto.armEncoderToAngle(Encoders.getMotorEnc(armLiftMotor1));
+            output = armController.rotateWithPid(90, (currentAngle));
+            Control.motor.moveMotor(armLiftMotor1, output);
+        }
+
+        ElapsedTime timer = new ElapsedTime;
+        while (ElapsedTime.seconds() < ){
+
+        }
 
     }
 
