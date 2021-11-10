@@ -8,7 +8,6 @@ import org.firstinspires.ftc.teamcode.hardware.Control;
 import org.firstinspires.ftc.teamcode.hardware.Devices;
 
 import static org.firstinspires.ftc.teamcode.hardware.Devices.armLiftMotor1;
-import static org.firstinspires.ftc.teamcode.hardware.Devices.armLiftMotor2;
 import static org.firstinspires.ftc.teamcode.hardware.Devices.boxMover;
 import static org.firstinspires.ftc.teamcode.hardware.Devices.intake;
 import static org.firstinspires.ftc.teamcode.hardware.Devices.slideLiftMotor;
@@ -18,9 +17,11 @@ import static org.firstinspires.ftc.teamcode.hardware.Devices.spinner;
 //testing 123
 public class TestingTeleOp extends BaseRobot {
     double currentAngle;
+    Control.pid armController;
     @Override
     public void init() {
         super.init();
+        armController = new Control.pid();
     }
 
     @Override
@@ -34,27 +35,16 @@ public class TestingTeleOp extends BaseRobot {
 
         // drive using tankanum
         Control.drive.tankanumDrive(gamepad1.right_stick_y, gamepad1.left_stick_y, gamepad1.right_stick_x);
-
+        currentAngle = Control.auto.armEncoderToAngle(armLiftMotor1.getCurrentPosition());
         // control arm rotation
-        if (gamepad1.dpad_up) {
-            if (armLiftMotor1.getCurrentPosition()<30) {
-                Control.motor.moveMotor(Devices.armLiftMotor1, 0.1);
-                Control.motor.moveMotor(Devices.armLiftMotor2, 0.1);
-            } else {
+        if (gamepad1.dpad_up && currentAngle<135) {
+                double output = armController.rotateWithPid(90, (currentAngle));
                 Control.motor.moveMotor(Devices.armLiftMotor1, 1);
-                Control.motor.moveMotor(Devices.armLiftMotor2, 1);
-            }
-        } else if (gamepad1.dpad_down) {
-            if (armLiftMotor1.getCurrentPosition()>30) {
-                Control.motor.moveMotor(Devices.armLiftMotor1, -0.5);
-                Control.motor.moveMotor(Devices.armLiftMotor2, -0.5);
-            } else {
+        } else if (gamepad1.dpad_down &&currentAngle>-30) {
+                double output = armController.rotateWithPid(0, currentAngle);
                 Control.motor.moveMotor(Devices.armLiftMotor1, -1);
-                Control.motor.moveMotor(Devices.armLiftMotor2, -1);
-            }
         } else {
             Control.motor.moveMotor(Devices.armLiftMotor1, 0);
-            Control.motor.moveMotor(Devices.armLiftMotor2, 0);
         }
 
         //control arm extension
@@ -67,17 +57,17 @@ public class TestingTeleOp extends BaseRobot {
 
         //control spinner
         if (gamepad1.a)
-            Control.motor.moveMotor(spinner, 1);
-        //else if (gamepad1.b)
-            //Control.motor.moveMotor(spinner, -1);
+            Control.motor.moveMotor(spinner, -0.3);
         else
             Control.motor.moveMotor(spinner, 0);
 
         //intake
         if (gamepad1.dpad_left) {
-            intake.setPosition(0);
+            intake.setPower(-1);
         } else if (gamepad1.dpad_right) {
-            intake.setPosition(1.0);
+            intake.setPower(1.0);
+        } else {
+            intake.setPower(0);
         }
 
         if(gamepad1.x) {
@@ -87,10 +77,9 @@ public class TestingTeleOp extends BaseRobot {
         }
 
         telemetry.addData("arm econder reading 1: ", armLiftMotor1.getCurrentPosition());
-        telemetry.addData("arm econder reading 2: ", armLiftMotor2.getCurrentPosition());
-        currentAngle = armLiftMotor1.getCurrentPosition()/ ConstantVariables.ARM_ROTATE_PPR* 360;
+        telemetry.addData("arm extender encoder reading: ", slideLiftMotor.getCurrentPosition());
+        currentAngle = armLiftMotor1.getCurrentPosition()/ ConstantVariables.ARM_ROTATE_PPR* 360 * ConstantVariables.ARM_GEAR_RATIO;
         telemetry.addData("current angle: ", currentAngle);
-
     }
 }
 

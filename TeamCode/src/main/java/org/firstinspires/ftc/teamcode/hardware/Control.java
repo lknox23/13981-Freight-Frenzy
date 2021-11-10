@@ -152,7 +152,7 @@ public class Control extends Devices {
     public static class auto {
 
         public static double armEncoderToAngle(double encoderReading) {
-            return encoderReading/ConstantVariables.ARM_ROTATE_PPR* 360;
+            return encoderReading/ConstantVariables.ARM_ROTATE_PPR* 360*ConstantVariables.ARM_GEAR_RATIO;
         }
 
         public static void spinCarousel(DcMotor motor) {
