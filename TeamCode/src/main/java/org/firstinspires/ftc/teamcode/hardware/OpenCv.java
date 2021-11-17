@@ -1,13 +1,6 @@
-package org.firstinspires.ftc.teamcode.teleops;
-
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+package org.firstinspires.ftc.teamcode.hardware;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.hardware.Control;
-import org.firstinspires.ftc.teamcode.hardware.Devices;
-import org.firstinspires.ftc.teamcode.hardware.OpenCv;
-import org.firstinspires.ftc.teamcode.hardware.SamplePipeline;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
@@ -22,19 +15,9 @@ import org.openftc.easyopencv.OpenCvWebcam;
 
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
-import static org.firstinspires.ftc.teamcode.hardware.OpenCv.OpenCvTelemetry;
-import static org.firstinspires.ftc.teamcode.hardware.OpenCv.initWebcam;
 
-
-@TeleOp
-public class OpenCvSample extends LinearOpMode {
-    OpenCvWebcam webcam;
-    SamplePipeline pipeline;
-    @Override
-    public void runOpMode() {
-
-        pipeline = new SamplePipeline();
-
+public class OpenCv {
+    public static OpenCvWebcam initWebcam(OpenCvPipeline pipeline) {
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         OpenCvWebcam webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
         webcam.setPipeline(pipeline);
@@ -49,19 +32,16 @@ public class OpenCvSample extends LinearOpMode {
 
             }
         });
+        return webcam;
+    }
 
-        telemetry.addLine("camera initialized");
-
-        waitForStart();
-        double avg1;
-        double avg2;
-        while (opModeIsActive()) {
-            //OpenCvTelemetry(webcam);
-            avg1 = pipeline.getAvg1();
-            avg2 = pipeline.getAvg2();
-            telemetry.addData("avg1", avg1);
-            telemetry.addData("avg2", avg2);
-            telemetry.update();
-        }
+    public static void OpenCvTelemetry(OpenCvWebcam webcam) {
+        telemetry.addData("Frame Count", webcam.getFrameCount());
+        telemetry.addData("FPS", String.format("%.2f", webcam.getFps()));
+        telemetry.addData("Total frame time ms", webcam.getTotalFrameTimeMs());
+        telemetry.addData("Pipeline time ms", webcam.getPipelineTimeMs());
+        telemetry.addData("Overhead time ms", webcam.getOverheadTimeMs());
+        telemetry.addData("Theoretical max FPS", webcam.getCurrentPipelineMaxFps());
+        telemetry.update();
     }
 }

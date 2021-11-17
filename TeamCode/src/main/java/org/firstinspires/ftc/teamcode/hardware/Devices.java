@@ -6,11 +6,12 @@ import com.qualcomm.robotcore.hardware.*;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 
+import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.FORWARD;
 import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
 
 public class Devices {
     // to add a hardware device, initialize the device here and map them in BaseBot
-    public static DcMotor leftFrontDriveMotor, rightFrontDriveMotor, leftBackDriveMotor, rightBackDriveMotor, armLiftMotor1, slideLiftMotor, spinner;
+    public static DcMotor leftFrontDriveMotor, rightFrontDriveMotor, leftBackDriveMotor, rightBackDriveMotor, armLiftMotor1, armLiftMotor2, slideLiftMotor, spinner;
 
     public static Servo boxMover;
     public static CRServo intake;
@@ -27,6 +28,7 @@ public class Devices {
         Devices.leftFrontDriveMotor = hardwareMap.get(DcMotor.class, "frontLeft");
         Devices.rightFrontDriveMotor = hardwareMap.get(DcMotor.class, "frontRight");
         Devices.armLiftMotor1 = hardwareMap.get(DcMotor.class, "armLift1");
+        Devices.armLiftMotor2 = hardwareMap.get(DcMotor.class, "armLift2");
 
         Devices.slideLiftMotor = hardwareMap.get(DcMotor.class, "slide");
         Devices.spinner = hardwareMap.get(DcMotor.class, "spinner");
@@ -37,12 +39,22 @@ public class Devices {
 
         Devices.imu = hardwareMap.get(BNO055IMU.class, "imu");
         Devices.webcam = hardwareMap.get(WebcamName.class, "Webcam 1");
-
+/*
+        rightFrontDriveMotor.setDirection(FORWARD);
+        rightBackDriveMotor.setDirection(FORWARD);
         leftFrontDriveMotor.setDirection(REVERSE);
         leftBackDriveMotor.setDirection(REVERSE);
 
+
+ */
+
+
+
+
 //        Devices.armLiftMotor = hardwareMap.get(DcMotor.class, "armLiftMotor");
         Devices.armLiftMotor1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        Devices.armLiftMotor2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        slideLiftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 //        Devices.armAdjustServo = hardwareMap.get(Servo.class,"armAdjustServo");
 
 //        Devices.lightStrip = hardwareMap.get(RevBlinkinLedDriver.class, "lightStrip");

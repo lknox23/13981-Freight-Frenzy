@@ -47,9 +47,9 @@ public class ConstantVariables {
 
     public static final double K_ARM_GEAR_RATIO = 1.0/2;
 
-    public static final double K_P = 0.05;
-    public static final double K_I = 0;
-    public static final double K_D = 0.11;
+    public static final double K_P = 0.03;
+    public static final double K_I = 0.00;
+    public static final double K_D = 0.05;
 
     public static final double K_INTEGRAL_RESET_THRESHOLD = 0.1;
 

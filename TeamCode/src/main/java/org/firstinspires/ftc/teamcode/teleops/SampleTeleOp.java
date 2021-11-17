@@ -29,7 +29,7 @@ public class SampleTeleOp extends BaseRobot {
         super.loop();
 
         // drive using tankanum
-        Control.drive.tankanumDrive(gamepad1.right_stick_y, gamepad1.left_stick_y, gamepad1.right_stick_x);
+        Control.drive.tankDrive(gamepad1.left_stick_y, gamepad1.right_stick_y);
 
         // control armLiftMotor
 //        if (gamepad1.dpad_down || gamepad1.a) {

@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.hardware;
 
+import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.hardware.*;
@@ -17,6 +19,8 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 
 import java.util.List;
+
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 
 public class Control extends Devices {
 
@@ -51,6 +55,7 @@ public class Control extends Devices {
         }
     }
     public static class pid {
+
         private ElapsedTime runtime;
         private double oldError;
         private double oldIntegral;
@@ -63,7 +68,11 @@ public class Control extends Devices {
             oldTime = 0;
         }
 
-        public double rotateWithPid(double goalPosition, double currentPosition) {
+        public double getIntegral() {
+            return oldIntegral;
+        }
+
+        public double rotateWithPid(double goalPosition, double currentPosition, double p, double i, double d) {
 
             double integral;
             double derivative;
@@ -82,10 +91,10 @@ public class Control extends Devices {
             oldIntegral = integral;
             oldTime = runtime.milliseconds();
 
-            return ConstantVariables.K_P*error + ConstantVariables.K_I*integral + ConstantVariables.K_D*derivative;
+            return p*error + i*integral + d*derivative;
         }
-        public double getSpeed(double goalPosition, double currentPosition) {
-            return ((goalPosition-currentPosition)-oldError)/(runtime.milliseconds()-oldTime);
+        public double getVelocity(double goalPosition, double currentPosition) { //degrees/second
+            return 1000*((goalPosition-currentPosition)-oldError)/(runtime.milliseconds()-oldTime);
         }
     }
 
@@ -119,6 +128,7 @@ public class Control extends Devices {
         }
 
         // tankDrive + mecanum drive
+        /*
         public static void tankanumDrive(double rightPwr, double leftPwr, double lateralPwr) {
             double leftFrontPower = Range.clip(leftPwr - lateralPwr, -1.0, 1.0);
             double leftBackPower = Range.clip(leftPwr + lateralPwr, -1.0, 1.0);
@@ -130,6 +140,8 @@ public class Control extends Devices {
             rightFrontDriveMotor.setPower(rightFrontPower);
             rightBackDriveMotor.setPower(rightBackPower);
         }
+
+         */
 
         public static void turnWithEncoder(double power) {
             Encoders.driveRunUsingEncoder();
@@ -154,20 +166,28 @@ public class Control extends Devices {
             return encoderReading/ConstantVariables.K_ARM_ROTATE_PPR * 360*ConstantVariables.K_ARM_GEAR_RATIO;
         }
 
-        public static void spinCarousel(DcMotor motor) {
-            int shiftValue = 1000; // increase/decrease depending on how long you want the motor to spin
+        public static void spinCarousel(DcMotor motor, double velocity) {
+            /*
+            Encoders.resetMotorEnc(motor);
+            int shiftValue = 300; // increase/decrease depending on how long you want the motor to spin
             int targetPosition = Encoders.getMotorEnc(motor) + shiftValue;
 
             motor.setTargetPosition(targetPosition);
             motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-            motor.setPower(1.0);
+            motor.setPower(velocity);
             while (motor.isBusy()) {
             }
             motor.setPower(0);
-
             Encoders.resetMotorEnc(motor);
+
+             */
+            ElapsedTime timer = new ElapsedTime();
+            motor.setPower(velocity);
+            while (timer.seconds()<3) {
+            }
+            motor.setPower(0);
         }
 
 //        double power = 1.0;
