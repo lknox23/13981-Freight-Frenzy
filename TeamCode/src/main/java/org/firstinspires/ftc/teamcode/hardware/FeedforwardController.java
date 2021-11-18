@@ -3,37 +3,54 @@ package org.firstinspires.ftc.teamcode.hardware;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
+
 public class FeedforwardController {
-    double F = 0;
-    double k_V=0;
-    double k_A=0;
+    double F;
+    double k_V;
+    double k_A;
 
-    double previousError;
-    double previousTime;
-    double previousVelocity;
-    double previousAcceleration;
+    double maximumSpeed;
+    double maxAcceleration;
 
-    double goal;
+    private double previousError;
+    private double previousTime;
+    private double previousVelocity;
 
-    ElapsedTime currentTime;
+    private double currentError;
+    private double currentVelocity;
+    private double currentAcceleration;
+    private double currentTime;
 
-    public FeedforwardController(double goalPosition) {
+    private double goal;
+
+    private double goalVelocity;
+    private double goalAcceleration;
+
+    ElapsedTime timer;
+
+    public FeedforwardController(double f, double v, double a, double maxSpeed, double maxAccel) {
+        F=f;
+        k_V=v;
+        k_A=a;
+        maximumSpeed=maxSpeed;
+        maxAcceleration=maxAccel;
+
         previousError=0;
         previousTime=0;
         previousVelocity=0;
-        previousAcceleration=0;
-        currentTime = new ElapsedTime();
-        goal = goalPosition;
+        timer = new ElapsedTime();
     }
-    public double getOutput (double currentPosition, MotionModel motionProfile) {
-        double time = currentTime.seconds();
-        double currentError = goal-currentPosition;
-        double currentVelocity=(currentError-previousError)/(time-previousTime);
-        double currentAcceleration = (currentVelocity-previousVelocity)/(time-previousTime);
-        double maximumSpeed;
-        double maxAcceleration;
-        double goalVelocity;
-        double goalAcceleration;
+    public double getOutput (double currentPosition, double goalPosition) {
+        goal = goalPosition;
+
+        currentTime = timer.seconds();
+        currentError = goal-currentPosition;
+        currentVelocity=(currentError-previousError)/(currentTime-previousTime);
+        currentAcceleration = (currentVelocity-previousVelocity)/(currentTime-previousTime);
+
+        double output;
+
         //start
         
         int direction_multiplier = 1;
@@ -42,43 +59,38 @@ public class FeedforwardController {
             direction_multiplier = -1;
         }
         if (Math.abs(currentVelocity) < maximumSpeed){
-            K_v = currentVelocity + direction_multiplier * maxAcceleration * (time - previousTime);
-            K_a = maxAcceleration;
+            goalVelocity = currentVelocity + direction_multiplier * maxAcceleration * (currentTime - previousTime);
+            goalAcceleration = maxAcceleration;
+        } else {
+            goalVelocity = maximumSpeed;
+            goalAcceleration = 0;
         }
-   #if maximum speed has been reached, stay there for now
-   else:
-        outputVelocity = MAXIMUM_SPEED
-        outputAcceleration = 0
 
-   #if we are close enough to the object to begin slowing down
-        if position_error <= (output_velocity * output_velocity) / (2 * MAX_ACCELERATION)):
-        output_velocity = current_velocity - direction_multiplier * MAX_ACCELERATION * (current_time - previous_time)
-        output_acceleration = -MAX_ACCELERATION
-
-        previous_time = current_time
+        if (currentError <= (goalVelocity * goalVelocity) / (2 * maxAcceleration)) {
+            goalVelocity = currentVelocity - direction_multiplier * maxAcceleration * (currentTime - previousTime);
+            goalAcceleration = -maxAcceleration;
+        }
                 //end
 
-        double velError = motionProfile.getV(velocity)-velocity;
-        double accError = motionProfile.getA(acceleration)-acceleration;
+        double velError = goalVelocity-currentVelocity;
+        double accError = goalAcceleration-currentAcceleration;
 
         output = F + k_V * velError + k_A * accError;
 
 
         previousError=currentError;
-        previousTime=time;
+        previousTime=currentTime;
         previousVelocity=currentVelocity;
-        previousAcceleration=currentAcceleration;
 
         return output;
     }
 
-    public static class MotionModel {
-        double maxV;
-        double maxA;
-        public MotionModel(double maxVelocity, double maxAcceleration) {
-            maxV=maxVelocity;
-            maxA=maxAcceleration;
+    public void addTelemetry() {
+        telemetry.addData("error: ", currentError);
+        telemetry.addData("velocity: ", currentVelocity);
+        telemetry.addData("accelerration: ", currentAcceleration);
 
-        }
+        telemetry.addData("goal velocity: ", goalVelocity);
+        telemetry.addData("goal acceleration: ", goalAcceleration);
     }
 }

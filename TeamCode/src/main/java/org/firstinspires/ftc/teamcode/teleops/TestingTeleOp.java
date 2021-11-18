@@ -109,12 +109,12 @@ public class TestingTeleOp extends BaseRobot {
         // control arm rotation
 
         if (armModeCoolDown.seconds()>.25) {
-            if (gamepad1.dpad_up && armMode < 3) {
+            if (gamepad1.dpad_up && armMode < 2) {
                 armMode++;
                 armModeCoolDown.reset();
                 updateSlide();
             } else if (gamepad1.dpad_down && armMode > 0) {
-                if (armMode == 4)
+                if (armMode == 3)
                     armMode = 1;
                 armMode--;
                 armModeCoolDown.reset();

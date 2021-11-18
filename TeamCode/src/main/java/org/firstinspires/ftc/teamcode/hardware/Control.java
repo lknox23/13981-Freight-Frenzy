@@ -166,6 +166,10 @@ public class Control extends Devices {
             return encoderReading/ConstantVariables.K_ARM_ROTATE_PPR * 360*ConstantVariables.K_ARM_GEAR_RATIO;
         }
 
+        public static double armAngleToEncoder(double angle) {
+            return angle/360/ConstantVariables.K_ARM_GEAR_RATIO*ConstantVariables.K_ARM_ROTATE_PPR;
+        }
+
         public static void spinCarousel(DcMotor motor, double velocity) {
             /*
             Encoders.resetMotorEnc(motor);

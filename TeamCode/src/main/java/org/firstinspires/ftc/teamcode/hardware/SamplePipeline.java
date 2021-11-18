@@ -15,10 +15,10 @@ public class SamplePipeline extends OpenCvPipeline {
 
     int detectionThreshold = 120;
 
-    Point r1_point1 = new Point(0, 120);
-    Point r1_point2 = new Point(100, 240);
+    Point r1_point1 = new Point(50, 120);
+    Point r1_point2 = new Point(150, 240);
 
-    Point r2_point1 = new Point(180, 120);
+    Point r2_point1 = new Point(230, 120);
     Point r2_point2 = new Point(320, 240);
 
     Mat region1_Cr, region2_Cr;
