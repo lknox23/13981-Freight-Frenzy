@@ -30,8 +30,8 @@ public class Visualizer {
                                 .back(10)
                                 .turn(Math.toRadians(25))
                                 .back(23)
-                                .turn(Math.toRadians(20))
-                                .forward(100)
+                                .turn(Math.toRadians(-70))
+                                .forward(22)
                         .build()
                                 /*
                                 .splineTo(new Vector2d(-11, -47), Math.toRadians(90))

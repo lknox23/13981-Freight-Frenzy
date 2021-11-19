@@ -26,6 +26,7 @@ public class myAuto2 extends LinearOpMode {
 
     SamplePipeline pipeline;
     int duckPositionIndex;
+    String parkingChoice;
 
     public void runOpMode() {
         Devices.initDevices(hardwareMap);
@@ -33,6 +34,15 @@ public class myAuto2 extends LinearOpMode {
 
         telemetry.addData(">", "Press Play to start op mode");
         telemetry.update();
+
+        //parking choice
+        if (gamepad1.dpad_down){
+            parkingChoice = "storageUnit";
+        }
+        else if(gamepad1.dpad_up){
+            parkingChoice = "warehouse";
+        }
+
 
         waitForStart();
 
@@ -60,8 +70,14 @@ public class myAuto2 extends LinearOpMode {
         Control.auto.moveWithEncoder(-23, 0.5);
     }
     public void park(){
-        Control.auto.turnWithGyro(20, -0.5);
-        Control.auto.moveWithEncoder(100, 0.5);
+        if (parkingChoice.equals("warehouse")) {
+            Control.auto.turnWithGyro(20, -0.5);
+            Control.auto.moveWithEncoder(100, 0.5);
+        }
+        else if (parkingChoice.equals("storageUnit")){
+            Control.auto.turnWithGyro(75, 0.5);
+            Control.auto.moveWithEncoder(22, 0.5);
+        }
     }
 
     public void deliverDucks() {
