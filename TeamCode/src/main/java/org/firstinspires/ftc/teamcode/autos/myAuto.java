@@ -1,3 +1,4 @@
+
 package org.firstinspires.ftc.teamcode.autos;
 
 
@@ -36,12 +37,15 @@ import org.openftc.easyopencv.OpenCvWebcam;
 @Autonomous
 public class myAuto extends LinearOpMode {
 
+
+
     /*
      * Steps:
      * 1. Deliver preloaded box to alliance shipping hub
      * 2. Ducks
      * 3. Park
      * */
+
 
     SampleTankDrive drive;
     SamplePipeline pipeline;
@@ -121,12 +125,14 @@ public class myAuto extends LinearOpMode {
     }
 
     public void detectDucks() {
+
         /*
         Recognition duck = Control.auto.getDuck(telemetry);
 
         double duckPositionAngle = duck.estimateAngleToObject(AngleUnit.DEGREES);
         duckPositionIndex = Control.auto.getDuckPositionIndexThree(duckPositionAngle);
          */
+
 
         if (pipeline.inRegion1())
             duckPositionIndex = 0;
@@ -194,3 +200,5 @@ public class myAuto extends LinearOpMode {
         drive.followTrajectory(traj3);
     }
 }
+
+

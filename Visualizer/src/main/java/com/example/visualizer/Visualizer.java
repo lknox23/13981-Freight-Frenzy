@@ -23,7 +23,16 @@ public class Visualizer {
                 // Set constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(68.88, 68.88, Math.toRadians(180), Math.toRadians(180), 16.5)
                 .followTrajectorySequence(drive ->
-                        drive.trajectorySequenceBuilder(new Pose2d(-35, -60, Math.toRadians(135)))//new Pose2d(-35, 61, Math.toRadians(-90)))
+                        drive.trajectorySequenceBuilder(new Pose2d(-35, 60, Math.toRadians(-90)))//new Pose2d(-35, 61, Math.toRadians(-90)))
+                                .forward(10)
+                                .turn(Math.toRadians(45))
+                                .forward(10)
+                                .back(10)
+                                .turn(Math.toRadians(25))
+                                .back(23)
+                                .turn(Math.toRadians(20))
+                                .forward(100)
+                        .build()
                                 /*
                                 .splineTo(new Vector2d(-11, -47), Math.toRadians(90))
                                 .strafeLeft(24)
@@ -32,7 +41,7 @@ public class Visualizer {
                                 .forward(-13)
                                 .forward(25)
                                  */
-                                /*
+/*
                                 .splineTo(new Vector2d(-13, 40), Math.toRadians(-90))
                                 .setReversed(true)
                                 .splineTo(new Vector2d(-60, 60), Math.toRadians(180))
@@ -40,7 +49,10 @@ public class Visualizer {
                                 .splineTo(new Vector2d(38, 45), Math.toRadians(0))
                                 .build()
 
-                                 */
+
+ */
+
+                                /*
                                 .forward(20)
                                 .turn(Math.toRadians(-60))
                                 .back(10)
@@ -48,6 +60,8 @@ public class Visualizer {
                                 .turn(Math.toRadians(-75)).
                                 forward(100)
                                 .build()
+
+                                 */
                 )
                 .start();
 
