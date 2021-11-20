@@ -22,11 +22,14 @@ import org.firstinspires.ftc.teamcode.hardware.SamplePipeline;
 
 @Autonomous
 
-public class myAuto2 extends LinearOpMode {
+public class RedAndBlueAuto extends LinearOpMode {
 
     SamplePipeline pipeline;
     int duckPositionIndex;
     String parkingChoice;
+
+    //1 = blue, -1 = red
+    int variable;
 
     public void runOpMode() {
         Devices.initDevices(hardwareMap);
@@ -63,22 +66,22 @@ public class myAuto2 extends LinearOpMode {
 
     public void shippingHub() {
         Control.auto.moveWithEncoder(10, 0.5);
-        Control.auto.turnWithGyro(45, -0.5);
+        Control.auto.turnWithGyro(-45, -0.5);
         Control.auto.moveWithEncoder(10, 0.5);
     }
     public void carousel() {
         Control.auto.moveWithEncoder(10, -0.5);
-        Control.auto.turnWithGyro(25, -0.5);
+        Control.auto.turnWithGyro(-25, -0.5);
         Control.auto.moveWithEncoder(-23, 0.5);
     }
     public void park(){
         if (parkingChoice.equals("warehouse")) {
             Control.auto.moveWithEncoder(35, 0.5);
-            Control.auto.turnWithGyro(20, -0.5);
+            Control.auto.turnWithGyro(-20, -0.5);
             Control.auto.moveWithEncoder(80, 0.5);
         }
         else if (parkingChoice.equals("storageUnit")){
-            Control.auto.turnWithGyro(75, 0.5);
+            Control.auto.turnWithGyro(-75, 0.5);
             Control.auto.moveWithEncoder(22, 0.5);
         }
     }
