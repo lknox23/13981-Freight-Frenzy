@@ -37,9 +37,9 @@ public class myAuto2 extends LinearOpMode {
 
     public void runOpMode() {
         Devices.initDevices(hardwareMap);
-        SampleTankDrive drive = new SampleTankDrive(hardwareMap);
+        //SampleTankDrive drive = new SampleTankDrive(hardwareMap);
         initializeStuff();
-        Encoders.driveResetEncs();
+        //Encoders.driveResetEncs();
 
         telemetry.addData(">","Press dpad_down for storage parking");
         telemetry.addData(">","Press dpad_up for warehouse parking");
@@ -65,25 +65,24 @@ public class myAuto2 extends LinearOpMode {
         if (duckPositionIndex==0)
             placePreloaded(30, 250, .15);
         else if (duckPositionIndex==1)
-            placePreloaded(0,  100, .1);
-        else
             placePreloaded(45, 400, .2);
+        else
+            placePreloaded(0,  100, .1);
+
         carousel();
         deliverDucks();
         park();
-
-
     }
 
     public void shippingHub() {
-        Control.auto.moveWithEncoder(20, 0.5);
-        Control.auto.turnWithGyro(45, -1);
         Control.auto.moveWithEncoder(15, 0.5);
+        Control.auto.turnWithGyro(45, -1);
+        Control.auto.moveWithEncoder(10, 0.5);
     }
     public void carousel() {
         Control.auto.moveWithEncoder(-15, 0.5);
         Control.auto.turnWithGyro(25, -0.5);
-        Control.auto.moveWithEncoder(-23, 0.5);
+        Control.auto.moveWithEncoder(-45, 0.5);
     }
     public void park(){
         if (parkingChoice.equals("warehouse")) {
@@ -92,8 +91,8 @@ public class myAuto2 extends LinearOpMode {
             Control.auto.moveWithEncoder(80, 0.5);
         }
         else if (parkingChoice.equals("storageUnit")){
-            Control.auto.turnWithGyro(45, 0.5);
-            Control.auto.moveWithEncoder(30, 0.5);
+            Control.auto.turnWithGyro(60, 0.5);
+            Control.auto.moveWithEncoder(35, 0.5);
         }
     }
 

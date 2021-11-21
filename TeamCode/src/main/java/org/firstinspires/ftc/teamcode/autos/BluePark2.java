@@ -42,12 +42,16 @@ public class BluePark2 extends LinearOpMode{
         telemetry.update();
 
         //parking choice
+        /*
         if (gamepad1.dpad_down){
             parkingChoice = "storageUnit";
         }
         else if(gamepad1.dpad_up){
             parkingChoice = "warehouse";
         }
+
+         */
+        parkingChoice = "warehouse";
 
         waitForStart();
 

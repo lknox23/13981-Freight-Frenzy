@@ -34,7 +34,7 @@ public class RedPark2 extends LinearOpMode{
 
     public void runOpMode() {
         Devices.initDevices(hardwareMap);
-        SampleTankDrive drive = new SampleTankDrive(hardwareMap);
+        //SampleTankDrive drive = new SampleTankDrive(hardwareMap);
 
         telemetry.addData(">","Press dpad_down for storage parking");
         telemetry.addData(">","Press dpad_up for warehouse parking");
@@ -42,12 +42,16 @@ public class RedPark2 extends LinearOpMode{
         telemetry.update();
 
         //parking choice
+        /*
         if (gamepad1.dpad_down){
             parkingChoice = "storageUnit";
         }
         else if(gamepad1.dpad_up){
             parkingChoice = "warehouse";
         }
+
+         */
+        parkingChoice = "warehouse";
 
         waitForStart();
 

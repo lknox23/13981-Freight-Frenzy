@@ -71,9 +71,10 @@ public class myAutoRed2 extends LinearOpMode {
         if (duckPositionIndex==0)
             placePreloaded(30, 250, .15);
         else if (duckPositionIndex==1)
-            placePreloaded(0,  100, .1);
-        else
             placePreloaded(45, 400, .2);
+        else
+            placePreloaded(0,  100, .1);
+
         carousel();
         deliverDucks();
         park();
@@ -157,6 +158,7 @@ public class myAutoRed2 extends LinearOpMode {
             Control.motor.moveMotor(armLiftMotor1, output/2);
             if (slideLiftMotor.getCurrentPosition()<extension) slideLiftMotor.setPower(0.2);
             else slideLiftMotor.setPower(restPower);
+
         }
 
         ElapsedTime timer = new ElapsedTime();
@@ -172,7 +174,7 @@ public class myAutoRed2 extends LinearOpMode {
             if (slideLiftMotor.getCurrentPosition()<extension) slideLiftMotor.setPower(0.4);
             else slideLiftMotor.setPower(restPower);
 
-            if (timer.seconds()>2) {
+            if (timer.seconds()>=2) {
                 boxMover.setPosition(0.05);
                 intake.setPower(0.5);
             }
