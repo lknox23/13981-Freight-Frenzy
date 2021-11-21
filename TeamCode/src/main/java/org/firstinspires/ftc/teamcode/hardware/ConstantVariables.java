@@ -3,9 +3,9 @@ package org.firstinspires.ftc.teamcode.hardware;
 // constant variables for drive algorithms
 public class ConstantVariables {
 
-    public static final double WHEEL_DIAMETER = 3.77953; // diameter of wheels (this one is gobuilda mecanum)
-    public static final int GEAR_RATIO = 20; // gear ratio of motors (this one is 20:1)
-    public static final int COUNTS_PER_ROTATION = 37; // increase/decrease during calibration
+    public static final double WHEEL_DIAMETER = 4; // diameter of wheels (this one is gobuilda mecanum)
+    public static final int GEAR_RATIO = 1; // gear ratio of motors (this one is 20:1)
+    public static final int COUNTS_PER_ROTATION = 200; // increase/decrease during calibration
     public static final double COUNTS_PER_INCH = (COUNTS_PER_ROTATION * GEAR_RATIO) / (Math.PI * WHEEL_DIAMETER); //counts per inch, cpr * gear ratio / (2 * pi * diameter (in inches, in the center))
     public static final double BIAS = 1.0;
 

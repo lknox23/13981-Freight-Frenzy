@@ -13,7 +13,7 @@ public class Devices {
     // to add a hardware device, initialize the device here and map them in BaseBot
     public static DcMotor leftFrontDriveMotor, rightFrontDriveMotor, leftBackDriveMotor, rightBackDriveMotor, armLiftMotor1, armLiftMotor2, slideLiftMotor, spinner;
 
-    public static Servo boxMover;
+    public static Servo boxMover;//, support;
     public static CRServo intake;
     public static RevBlinkinLedDriver lightStrip;
     public static DistanceSensor distanceSensor;
@@ -35,6 +35,7 @@ public class Devices {
 
         Devices.intake = hardwareMap.get(CRServo.class, "intake");
         Devices.boxMover = hardwareMap.get(Servo.class, "boxMover");
+        //Devices.support = hardwareMap.get(Servo.class, "support");
         Control.drive.configureDriveMotors();
 
         Devices.imu = hardwareMap.get(BNO055IMU.class, "imu");

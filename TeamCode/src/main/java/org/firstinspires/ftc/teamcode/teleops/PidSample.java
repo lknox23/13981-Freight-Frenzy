@@ -34,10 +34,10 @@ public class PidSample extends BaseRobot {
         currentAngle = Control.auto.armEncoderToAngle(Encoders.getMotorEnc(armLiftMotor1));
 
         if(gamepad1.dpad_up) {
-            if (currentAngle<70)
+            //if (currentAngle<70)
                 output = armController.rotateWithPid(60, (currentAngle), p, i, d);
-            else
-                output = armController.rotateWithPid(60, currentAngle, p1, i, d);
+            //else
+            //    output = armController.rotateWithPid(60, currentAngle, p1, i, d);
         } else if (gamepad1.dpad_down) {
             output = armController.rotateWithPid(0, currentAngle, p1, i, d);
         }
