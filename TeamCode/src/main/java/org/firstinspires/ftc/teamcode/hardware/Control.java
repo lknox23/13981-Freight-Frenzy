@@ -24,7 +24,6 @@ import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.tel
 
 public class Control extends Devices {
 
-
     // MOTORS
 
     public static class motor {

@@ -18,7 +18,7 @@ public class RedPark extends LinearOpMode {
 
         SampleTankDrive drive = new SampleTankDrive(hardwareMap);
         Trajectory traj1 = drive.trajectoryBuilder(new Pose2d())
-                .forward(40)
+                .forward(50)
                 .build();
 
         Devices.initDevices(hardwareMap);

@@ -61,10 +61,12 @@ public class myAuto extends LinearOpMode {
         initializeStuff();
         initRR();
         telemetry.addLine("initialized");
+
+        waitForStart();
+
         detectDucks();
         telemetry.addData("duck position: ", duckPositionIndex);
         telemetry.update();
-        waitForStart();
 
         if (isStopRequested()) return;
 
@@ -103,6 +105,7 @@ public class myAuto extends LinearOpMode {
 
             }
         });
+
         Control.sensor.initGyro();
         boxMover.setPosition(0.35);
 
@@ -116,10 +119,10 @@ public class myAuto extends LinearOpMode {
         traj1 = drive.trajectoryBuilder(startingPosition)
                 .splineTo(new Vector2d(-13, -40), Math.toRadians(90))
                 .build();
-        traj2 = drive.trajectoryBuilder(new Pose2d(), true)
+        traj2 = drive.trajectoryBuilder(traj1.end(), true)
                 .splineTo(new Vector2d(-60, -60), Math.toRadians(180))
                 .build();
-        traj3 = drive.trajectoryBuilder(new Pose2d())
+        traj3 = drive.trajectoryBuilder(traj2.end(), false)
                 .splineTo(new Vector2d(38, -45), Math.toRadians(0))
                 .build();
     }

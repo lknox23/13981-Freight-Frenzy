@@ -13,7 +13,7 @@ public class SamplePipeline extends OpenCvPipeline {
     final Scalar BLUE = new Scalar(0, 0, 255);
     final Scalar GREEN = new Scalar(0, 255, 0);
 
-    int detectionThreshold = 120;
+    int detectionThreshold = 125;
 
     Point r1_point1 = new Point(50, 120);
     Point r1_point2 = new Point(150, 240);
