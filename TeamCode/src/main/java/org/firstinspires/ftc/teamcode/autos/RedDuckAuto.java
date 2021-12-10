@@ -5,6 +5,7 @@ import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.drive.SampleTankDrive;
 import org.firstinspires.ftc.teamcode.hardware.Control;
 import org.firstinspires.ftc.teamcode.hardware.Devices;
@@ -15,7 +16,7 @@ import static org.firstinspires.ftc.teamcode.hardware.Devices.spinner;
 @Autonomous
 public class RedDuckAuto extends LinearOpMode {
     public void runOpMode() {
-        SampleTankDrive drive = new SampleTankDrive(hardwareMap);
+        SampleMecanumDrive drive = new SampleTankDrive(hardwareMap);
         Trajectory traj1 = drive.trajectoryBuilder(new Pose2d())
                 .forward(20)
                 .build();

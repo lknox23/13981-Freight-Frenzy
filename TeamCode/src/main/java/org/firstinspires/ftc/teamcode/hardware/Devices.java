@@ -5,6 +5,9 @@ import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.robotcore.hardware.*;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.teamcode.util.AxesSigns;
+import org.firstinspires.ftc.teamcode.util.BNO055IMUUtil;
 
 import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.FORWARD;
 import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
@@ -38,6 +41,7 @@ public class Devices {
         Control.drive.configureDriveMotors();
 
         Devices.imu = hardwareMap.get(BNO055IMU.class, "imu");
+        BNO055IMUUtil.remapAxes(imu, AxesOrder.ZYX, AxesSigns.NPN);
         Devices.webcam = hardwareMap.get(WebcamName.class, "Webcam 1");
 /*
         rightFrontDriveMotor.setDirection(FORWARD);

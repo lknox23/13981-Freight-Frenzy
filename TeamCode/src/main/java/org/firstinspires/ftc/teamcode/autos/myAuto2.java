@@ -5,6 +5,7 @@ import static org.firstinspires.ftc.teamcode.hardware.ConstantVariables.K_D;
 import static org.firstinspires.ftc.teamcode.hardware.ConstantVariables.K_I;
 import static org.firstinspires.ftc.teamcode.hardware.ConstantVariables.K_P;
 import static org.firstinspires.ftc.teamcode.hardware.Devices.armLiftMotor1;
+import static org.firstinspires.ftc.teamcode.hardware.Devices.armLiftMotor2;
 import static org.firstinspires.ftc.teamcode.hardware.Devices.boxMover;
 import static org.firstinspires.ftc.teamcode.hardware.Devices.slideLiftMotor;
 
@@ -32,16 +33,15 @@ public class myAuto2 extends LinearOpMode {
         Devices.initDevices(hardwareMap);
         SampleTankDrive drive = new SampleTankDrive(hardwareMap);
 
-        telemetry.addData(">","Press dpad_down for storage parking");
-        telemetry.addData(">","Press dpad_up for warehouse parking");
+        telemetry.addData(">", "Press dpad_down for storage parking");
+        telemetry.addData(">", "Press dpad_up for warehouse parking");
         telemetry.addData(">", "Press Play to start op mode");
         telemetry.update();
 
         //parking choice
-        if (gamepad1.dpad_down){
+        if (gamepad1.dpad_down) {
             parkingChoice = "storageUnit";
-        }
-        else if(gamepad1.dpad_up){
+        } else if (gamepad1.dpad_up) {
             parkingChoice = "warehouse";
         }
 
@@ -63,21 +63,22 @@ public class myAuto2 extends LinearOpMode {
 
     public void shippingHub() {
         Control.auto.moveWithEncoder(10, 0.5);
-        Control.auto.turnWithGyro(45, -0.5);
+        Control.auto.turnWithGyro(-45, -0.5);
         Control.auto.moveWithEncoder(10, 0.5);
     }
+
     public void carousel() {
-        Control.auto.moveWithEncoder(10, -0.5);
-        Control.auto.turnWithGyro(25, -0.5);
+        Control.auto.moveWithEncoder(-10, 0.5);
+        Control.auto.turnWithGyro(-25, -0.5);
         Control.auto.moveWithEncoder(-23, 0.5);
     }
-    public void park(){
+
+    public void park() {
         if (parkingChoice.equals("warehouse")) {
             Control.auto.moveWithEncoder(35, 0.5);
             Control.auto.turnWithGyro(20, -0.5);
             Control.auto.moveWithEncoder(80, 0.5);
-        }
-        else if (parkingChoice.equals("storageUnit")){
+        } else if (parkingChoice.equals("storageUnit")) {
             Control.auto.turnWithGyro(75, 0.5);
             Control.auto.moveWithEncoder(22, 0.5);
         }
@@ -118,14 +119,37 @@ public class myAuto2 extends LinearOpMode {
         double currentAngle = Control.auto.armEncoderToAngle(Encoders.getMotorEnc(armLiftMotor1));
         double output;
         int angle;
-        if (duckPositionIndex==0) angle = 0;
-        else if (duckPositionIndex==1) angle = 30;
-        else angle = 60;
 
         Control.pid armController = new Control.pid();
-
         boxMover.setPosition(1);
 
+        if (duckPositionIndex == 0) {
+            angle = 10;
+            while (Math.abs(currentAngle - angle) > 5) {
+                output = 0.15;
+                Control.motor.moveMotor(armLiftMotor1, output);
+                Control.motor.moveMotor(armLiftMotor2, output);
+                currentAngle = Control.auto.armEncoderToAngle(Encoders.getMotorEnc(armLiftMotor1));
+            }
+        } else if (duckPositionIndex == 1) {
+            angle = 30;
+            while (Math.abs(currentAngle - angle) > 5) {
+                output = 0.15;
+                Control.motor.moveMotor(armLiftMotor1, output);
+                Control.motor.moveMotor(armLiftMotor2, output);
+                currentAngle = Control.auto.armEncoderToAngle(Encoders.getMotorEnc(armLiftMotor1));
+            }
+        } else {
+            angle = 60;
+            while (Math.abs(currentAngle - angle) > 5) {
+                output = 0.15;
+                Control.motor.moveMotor(armLiftMotor1, output);
+                Control.motor.moveMotor(armLiftMotor2, output);
+                currentAngle = Control.auto.armEncoderToAngle(Encoders.getMotorEnc(armLiftMotor1));
+            }
+
+
+/*
         while (opModeIsActive() && currentAngle<angle-5){
             currentAngle = Control.auto.armEncoderToAngle(Encoders.getMotorEnc(armLiftMotor1));
             output = armController.rotateWithPid(angle, (currentAngle), K_P, K_I, K_D);
@@ -133,16 +157,20 @@ public class myAuto2 extends LinearOpMode {
             if (slideLiftMotor.getCurrentPosition()<100) slideLiftMotor.setPower(0.2);
         }
 
-        ElapsedTime timer = new ElapsedTime();
-        telemetry.addLine("point reached");
-        boxMover.setPosition(0);
+         */
 
-        while (opModeIsActive()&&timer.seconds() < 1 ){
-            currentAngle = Control.auto.armEncoderToAngle(Encoders.getMotorEnc(armLiftMotor1));
-            output = armController.rotateWithPid(angle, (currentAngle), K_P, K_I, K_D);
-            Control.motor.moveMotor(armLiftMotor1, output);
-            if (slideLiftMotor.getCurrentPosition()<100) slideLiftMotor.setPower(0.2);
+            ElapsedTime timer = new ElapsedTime();
+            telemetry.addLine("point reached");
+            boxMover.setPosition(0);
+
+            while (opModeIsActive() && timer.seconds() < 1) {
+                currentAngle = Control.auto.armEncoderToAngle(Encoders.getMotorEnc(armLiftMotor1));
+                output = armController.rotateWithPid(angle, (currentAngle), K_P, K_I, K_D);
+                Control.motor.moveMotor(armLiftMotor1, output);
+                if (slideLiftMotor.getCurrentPosition() < 100) slideLiftMotor.setPower(0.2);
+            }
         }
+
     }
 
 }

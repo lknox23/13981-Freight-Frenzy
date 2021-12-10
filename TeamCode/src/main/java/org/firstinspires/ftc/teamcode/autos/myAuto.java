@@ -47,7 +47,7 @@ public class myAuto extends LinearOpMode {
      * */
 
 
-    SampleTankDrive drive;
+    SampleMecanumDrive drive;
     SamplePipeline pipeline;
     OpenCvWebcam webcam;
 
@@ -109,7 +109,7 @@ public class myAuto extends LinearOpMode {
     }
 
     public void initRR() {
-        drive = new SampleTankDrive(hardwareMap);
+        drive = new SampleMecanumDrive(hardwareMap);
 
         Pose2d startingPosition = new Pose2d(10*coeff, 10*coeff, Math.toRadians(90));
         drive.setPoseEstimate(startingPosition);

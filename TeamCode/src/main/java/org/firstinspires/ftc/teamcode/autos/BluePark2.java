@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.autos;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
+import
+        static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
@@ -42,12 +43,12 @@ public class BluePark2 extends LinearOpMode{
         telemetry.update();
 
         //parking choice
-        if (gamepad1.dpad_down){
-            parkingChoice = "storageUnit";
-        }
-        else if(gamepad1.dpad_up){
+        //if (gamepad1.dpad_down){
+        //    parkingChoice = "storageUnit";
+        //}
+        //else if(gamepad1.dpad_up){
             parkingChoice = "warehouse";
-        }
+        //}
 
         waitForStart();
 
@@ -59,9 +60,11 @@ public class BluePark2 extends LinearOpMode{
 
     public void park(){
         if (parkingChoice.equals("warehouse")) {
-            Control.auto.moveWithEncoder(35, 0.5);
-            Control.auto.turnWithGyro(20, -0.5);
-            Control.auto.moveWithEncoder(80, 0.5);
+            Control.auto.moveWithEncoder(20, 0.5);
+            sleep(100);
+            Control.auto.turnWithGyro(90, -0.5);
+            sleep(100);
+            Control.auto.moveWithEncoder(40, 0.5);
         }
         else if (parkingChoice.equals("storageUnit")){
             Control.auto.turnWithGyro(75, 0.5);
