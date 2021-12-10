@@ -24,12 +24,14 @@ public class Visualizer {
                 // Background opacity from 0-1
                 .setBackgroundAlpha(1f)
                 // Set constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
-                .setConstraints(68.88, 68.88, Math.toRadians(180), Math.toRadians(180), 16.5)
+                .setConstraints(68.88, 68.88, Math.toRadians(180), Math.toRadians(180), 11.5)
         .followTrajectorySequence(drive ->
 
-        drive.trajectorySequenceBuilder(new Pose2d(-35, -60, Math.toRadians(90)))//new Pose2d(-35, 61, Math.toRadians(-90)))
-                .forward(10)
-                .turn(Math.toRadians(-45))
+        drive.trajectorySequenceBuilder(new Pose2d(0, 60, Math.toRadians(0)))//new Pose2d(-35, 61, Math.toRadians(-90)))
+                .forward(40)
+                .build()) .start()
+                ;
+                /*.turn(Math.toRadians(-45))
                 .forward(10)
                 .back(10)
                 .turn(Math.toRadians(-25))

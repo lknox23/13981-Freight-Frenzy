@@ -5,6 +5,7 @@ import
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
+import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.drive.SampleTankDrive;
 import org.firstinspires.ftc.teamcode.hardware.Control;
 import org.firstinspires.ftc.teamcode.hardware.Devices;
@@ -35,7 +36,7 @@ public class BluePark2 extends LinearOpMode{
 
     public void runOpMode() {
         Devices.initDevices(hardwareMap);
-        SampleTankDrive drive = new SampleTankDrive(hardwareMap);
+        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
         telemetry.addData(">","Press dpad_down for storage parking");
         telemetry.addData(">","Press dpad_up for warehouse parking");
