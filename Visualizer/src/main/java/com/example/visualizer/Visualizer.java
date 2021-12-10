@@ -25,9 +25,10 @@ public class Visualizer {
                 .setBackgroundAlpha(1f)
                 // Set constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(68.88, 68.88, Math.toRadians(180), Math.toRadians(180), 11.5)
+                .setBotDimensions(11, 15)
         .followTrajectorySequence(drive ->
 
-        drive.trajectorySequenceBuilder(new Pose2d(0, 60, Math.toRadians(0)))//new Pose2d(-35, 61, Math.toRadians(-90)))
+        drive.trajectorySequenceBuilder(new Pose2d(0, 64, Math.toRadians(0)))//new Pose2d(-35, 61, Math.toRadians(-90)))
                 .forward(40)
                 .build()) .start()
                 ;

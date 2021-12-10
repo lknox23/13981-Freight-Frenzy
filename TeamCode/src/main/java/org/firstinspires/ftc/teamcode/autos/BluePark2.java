@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode.autos;
 import
         static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
 
+import com.acmerobotics.roadrunner.geometry.Vector2d;
+import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
@@ -33,15 +35,16 @@ import org.firstinspires.ftc.teamcode.hardware.SamplePipeline;
 @Autonomous
 public class BluePark2 extends LinearOpMode{
     String parkingChoice;
+    SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
     public void runOpMode() {
         Devices.initDevices(hardwareMap);
-        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
-        telemetry.addData(">","Press dpad_down for storage parking");
+
+        /*telemetry.addData(">","Press dpad_down for storage parking");
         telemetry.addData(">","Press dpad_up for warehouse parking");
         telemetry.addData(">", "Press Play to start op mode");
-        telemetry.update();
+        telemetry.update();*/
 
         //parking choice
         //if (gamepad1.dpad_down){
@@ -60,12 +63,12 @@ public class BluePark2 extends LinearOpMode{
     }
 
     public void park(){
+        Pose2d startingPose = new Pose2d(0, 0, 0);
         if (parkingChoice.equals("warehouse")) {
-            Control.auto.moveWithEncoder(20, 0.5);
-            sleep(100);
-            Control.auto.turnWithGyro(90, -0.5);
-            sleep(100);
-            Control.auto.moveWithEncoder(40, 0.5);
+            Trajectory traj1 = drive.trajectoryBuilder(startingPose)
+                    .splineTo(new Vector2d(20, 30), Math.toRadians(90))
+                    .build();
+            drive.followTrajectory(traj1);
         }
         else if (parkingChoice.equals("storageUnit")){
             Control.auto.turnWithGyro(75, 0.5);
