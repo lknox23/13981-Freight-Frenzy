@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.hardware;
 
-import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.hardware.*;
@@ -9,6 +7,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
+import org.firstinspires.ftc.robotcore.external.Const;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
@@ -19,8 +18,6 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 
 import java.util.List;
-
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 
 public class Control extends Devices {
 
@@ -161,13 +158,13 @@ public class Control extends Devices {
 
     public static class auto {
 
-        public static double armEncoderToAngle(double encoderReading) {
+       /* public static double armEncoderToAngle(double encoderReading) {
             return encoderReading/ConstantVariables.K_ARM_ROTATE_PPR * 360*ConstantVariables.K_ARM_GEAR_RATIO;
         }
 
         public static double armAngleToEncoder(double angle) {
             return angle/360/ConstantVariables.K_ARM_GEAR_RATIO*ConstantVariables.K_ARM_ROTATE_PPR;
-        }
+        }*/
 
         public static void spinCarousel(DcMotor motor, double velocity) {
             /*
@@ -516,5 +513,16 @@ public class Control extends Devices {
                 return true;
             } else return false;
         }
+    }
+
+    public static class conversion {
+        public static double armEncoderToAngle(int encoder){
+            double armHeight = ConstantVariables.K_PPIN_ARM * encoder;
+            return Math.asin(armHeight/ConstantVariables.K_ARM_LENGTH);
+        }
+        public static double armAngleToEncoder(int angle){
+            return Math.sin(angle)/ConstantVariables.K_PPIN_ARM;
+        }
+
     }
 }

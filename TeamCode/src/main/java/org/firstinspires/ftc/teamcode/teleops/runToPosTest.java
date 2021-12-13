@@ -26,7 +26,7 @@ public class runToPosTest extends LinearOpMode {
     public static double d = 0.1;
     double power=0.2;
     double currentAngle;
-    int targetPosition= (int)Control.auto.armAngleToEncoder(45);
+    int targetPosition= (int)Control.conversion.armAngleToEncoder(45);
 
     double holdPosition;
 
@@ -42,7 +42,7 @@ public class runToPosTest extends LinearOpMode {
         armLiftMotor2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         waitForStart();
-        goToPos((int)Control.auto.armAngleToEncoder(45), armLiftMotor1.getCurrentPosition());
+        goToPos((int)Control.conversion.armAngleToEncoder(45), armLiftMotor1.getCurrentPosition());
         holdPos();
     }
 
@@ -73,15 +73,15 @@ public class runToPosTest extends LinearOpMode {
     }
 
     public void holdPos() {
-        holdPosition=Control.auto.armEncoderToAngle(armLiftMotor1.getCurrentPosition());
+        holdPosition=Control.conversion.armAngleToEncoder(armLiftMotor1.getCurrentPosition());
         telemetry.addData("hold position", holdPosition);
         telemetry.update();
         while (!isStopRequested()) {
-            power = armController.rotateWithPid(holdPosition, Control.auto.armEncoderToAngle(armLiftMotor1.getCurrentPosition()), p, i, d);
+            power = armController.rotateWithPid(holdPosition, Control.conversion.armAngleToEncoder(armLiftMotor1.getCurrentPosition()), p, i, d);
             armLiftMotor1.setPower(power);
             armLiftMotor2.setPower(power);
             telemetry.addData("power: ", power);
-            telemetry.addData("angle", Control.auto.armEncoderToAngle(armLiftMotor1.getCurrentPosition()));
+            telemetry.addData("angle", Control.conversion.armAngleToEncoder(armLiftMotor1.getCurrentPosition()));
             telemetry.update();
         }
     }

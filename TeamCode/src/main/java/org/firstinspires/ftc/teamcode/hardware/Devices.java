@@ -14,10 +14,10 @@ import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
 
 public class Devices {
     // to add a hardware device, initialize the device here and map them in BaseBot
-    public static DcMotor leftFrontDriveMotor, rightFrontDriveMotor, leftBackDriveMotor, rightBackDriveMotor, armLiftMotor1, armLiftMotor2, slideLiftMotor, spinner;
+    public static DcMotor leftFrontDriveMotor, rightFrontDriveMotor, leftBackDriveMotor, rightBackDriveMotor, armLiftMotor1, armLiftMotor2, slideLiftMotor, intakeMotor;
 
-    public static Servo boxMover;//, support;
-    public static CRServo intake;
+    public static Servo boxMover, outtake;//, support;
+    public static CRServo spinner;
     public static RevBlinkinLedDriver lightStrip;
     public static DistanceSensor distanceSensor;
     public static BNO055IMU imu;
@@ -34,10 +34,11 @@ public class Devices {
         Devices.armLiftMotor2 = hardwareMap.get(DcMotor.class, "armLift2");
 
         Devices.slideLiftMotor = hardwareMap.get(DcMotor.class, "slide");
-        Devices.spinner = hardwareMap.get(DcMotor.class, "spinner");
+        Devices.spinner = hardwareMap.get(CRServo.class, "spinner");
 
-        Devices.intake = hardwareMap.get(CRServo.class, "intake");
+        Devices.intakeMotor = hardwareMap.get(DcMotor.class, "intake");
         Devices.boxMover = hardwareMap.get(Servo.class, "boxMover");
+        Devices.outtake = hardwareMap.get(Servo.class, "outtake");
         //Devices.support = hardwareMap.get(Servo.class, "support");
         Control.drive.configureDriveMotors();
 
