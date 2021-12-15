@@ -43,9 +43,9 @@ public class DriveConstants {
      * angular distances although most angular parameters are wrapped in Math.toRadians() for
      * convenience. Make sure to exclude any gear ratio included in MOTOR_CONFIG from GEAR_RATIO.
      */
-    public static double WHEEL_RADIUS = 2.25; // in, radius
+    public static double WHEEL_RADIUS = 1.885; // in, radius (diameter = 96mm)
     public static double GEAR_RATIO = 1; // output (wheel) speed / input (motor) speed
-    public static double TRACK_WIDTH = 15.5; // in, this tuner helps most often
+    public static double TRACK_WIDTH = 10; // in, this tuner helps most often
 
     /*
      * These are the feedforward parameters used to model the drive motor behavior. If you are using
@@ -53,7 +53,7 @@ public class DriveConstants {
      * motor encoders or have elected not to use them for velocity control, these values should be
      * empirically tuned.
      */
-    public static double kV = .0125;
+    public static double kV = .0125; //TODO: run opmode to figure out
     public static double kA = .0025;
     public static double kStatic = .01;
 
