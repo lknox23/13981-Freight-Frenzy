@@ -18,7 +18,6 @@ import static org.firstinspires.ftc.teamcode.hardware.ConstantVariables.K_D;
 import static org.firstinspires.ftc.teamcode.hardware.ConstantVariables.K_I;
 import static org.firstinspires.ftc.teamcode.hardware.ConstantVariables.K_P;
 import static org.firstinspires.ftc.teamcode.hardware.Devices.armLiftMotor1;
-import static org.firstinspires.ftc.teamcode.hardware.Devices.armLiftMotor2;
 import static org.firstinspires.ftc.teamcode.hardware.Devices.boxMover;
 import static org.firstinspires.ftc.teamcode.hardware.Devices.intakeMotor;
 import static org.firstinspires.ftc.teamcode.hardware.Devices.leftBackDriveMotor;
@@ -56,7 +55,6 @@ public class TestingTeleOp extends BaseRobot {
         leftFrontDriveMotor.setDirection(REVERSE);
         Encoders.resetMotorEnc(slideLiftMotor);
         Encoders.resetMotorEnc(armLiftMotor1);
-        Encoders.resetMotorEnc(armLiftMotor2);
         boxMover.setPosition(0.35);
         dumpTimer = new ElapsedTime();
         slowModeCoolDown = new ElapsedTime();
@@ -143,7 +141,7 @@ public class TestingTeleOp extends BaseRobot {
 
         if (armMode==0) {
             //intake
-            armPower = 0.003;
+            armPower = -0.03;
             boxMover.setPosition(0.4);
             // armController.rotateWithPid(-8, currentAngle, .001, K_I, 0.01);
         } else if (armMode==1) {
@@ -173,7 +171,6 @@ public class TestingTeleOp extends BaseRobot {
             armPower = 0;
         }
         Control.motor.moveMotor(armLiftMotor1, armPower);
-        Control.motor.moveMotor(armLiftMotor2, armPower);
 
 
         //dumping
