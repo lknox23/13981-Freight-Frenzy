@@ -85,6 +85,11 @@ public class testingTeleOp2 extends BaseRobot {
             intakeMotor.setPower(0);
         }
 
+        if (gamepad1.b){
+            double targetPosition = Control.conversion.armAngleToEncoder(30); //degrees
+            Control.motor.setPositionInLoop(armLiftMotor1, 1, targetPosition);
+        }
+
     }
 
 

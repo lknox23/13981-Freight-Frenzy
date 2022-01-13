@@ -29,6 +29,18 @@ public class Control extends Devices {
         // 1.0: forwards
         // 0.0: brake
         // -1.0 backwards
+
+        public static boolean setPositionInLoop(DcMotor motor, double power, double targetPosition){
+            if(motor.getCurrentPosition() >= targetPosition){
+                moveMotor(motor, power);
+                return false;
+            }
+            else{
+                moveMotor(motor, 0);
+                return true;
+            }
+
+        }
         public static void moveMotor(DcMotor motor, double power) {
             double speed = Range.clip(power, -1.0, 1.0);
             motor.setPower(speed);
