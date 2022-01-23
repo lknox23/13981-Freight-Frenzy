@@ -55,6 +55,10 @@ public class Devices {
  */
 
 
+        Devices.rightBackDriveMotor.setDirection(REVERSE);
+        Devices.rightFrontDriveMotor.setDirection(REVERSE);
+        leftBackDriveMotor.setDirection(FORWARD);
+        leftFrontDriveMotor.setDirection(REVERSE);
 
 
 //        Devices.armLiftMotor = hardwareMap.get(DcMotor.class, "armLiftMotor");

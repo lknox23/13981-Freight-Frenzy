@@ -134,7 +134,7 @@ public class testingTeleOp2Copy extends BaseRobot {
 
         //arm control: arm extends and retracts
         if (gamepad1.dpad_down) {
-            extensionPosition = 0;
+            extensionPosition = 20;
         } else if (gamepad1.dpad_left) {
             extensionPosition = 850;
         } else if (gamepad1.dpad_up) {

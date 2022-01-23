@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.autos;
 
+import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.FORWARD;
+import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
 import
         static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
 
@@ -18,6 +20,8 @@ import static org.firstinspires.ftc.teamcode.hardware.ConstantVariables.K_I;
 import static org.firstinspires.ftc.teamcode.hardware.ConstantVariables.K_P;
 import static org.firstinspires.ftc.teamcode.hardware.Devices.armLiftMotor1;
 import static org.firstinspires.ftc.teamcode.hardware.Devices.boxMover;
+import static org.firstinspires.ftc.teamcode.hardware.Devices.leftBackDriveMotor;
+import static org.firstinspires.ftc.teamcode.hardware.Devices.leftFrontDriveMotor;
 import static org.firstinspires.ftc.teamcode.hardware.Devices.slideLiftMotor;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
@@ -34,12 +38,16 @@ import org.firstinspires.ftc.teamcode.hardware.SamplePipeline;
 
 @Autonomous
 public class BluePark2 extends LinearOpMode{
-    String parkingChoice;
-    SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+    //String parkingChoice;
+    //SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
     public void runOpMode() {
         Devices.initDevices(hardwareMap);
 
+        Devices.rightBackDriveMotor.setDirection(REVERSE);
+        Devices.rightFrontDriveMotor.setDirection(REVERSE);
+        leftBackDriveMotor.setDirection(REVERSE);
+        leftFrontDriveMotor.setDirection(FORWARD);
 
         /*telemetry.addData(">","Press dpad_down for storage parking");
         telemetry.addData(">","Press dpad_up for warehouse parking");
@@ -51,7 +59,7 @@ public class BluePark2 extends LinearOpMode{
         //    parkingChoice = "storageUnit";
         //}
         //else if(gamepad1.dpad_up){
-            parkingChoice = "warehouse";
+            //parkingChoice = "warehouse";
         //}
 
         waitForStart();
@@ -63,16 +71,19 @@ public class BluePark2 extends LinearOpMode{
     }
 
     public void park(){
-        Pose2d startingPose = new Pose2d(0, 0, 0);
+        //Pose2d startingPose = new Pose2d(0, 0, 0);
+        /*
         if (parkingChoice.equals("warehouse")) {
             Trajectory traj1 = drive.trajectoryBuilder(startingPose)
                     .splineTo(new Vector2d(20, 30), Math.toRadians(90))
                     .build();
             drive.followTrajectory(traj1);
         }
-        else if (parkingChoice.equals("storageUnit")){
-            Control.auto.turnWithGyro(75, 0.5);
-            Control.auto.moveWithEncoder(22, 0.5);
-        }
+
+         */
+        //else if (parkingChoice.equals("storageUnit")){
+            //Control.auto.turnWithGyro(75, 0.5);
+            Control.auto.moveWithEncoder(30, 0.5);
+        //}
     }
 }

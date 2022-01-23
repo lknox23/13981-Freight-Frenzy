@@ -51,8 +51,8 @@ public class testingTeleOp2 extends BaseRobot {
         armController = new Control.pid();
         Devices.rightBackDriveMotor.setDirection(REVERSE);
         Devices.rightFrontDriveMotor.setDirection(REVERSE);
-        leftBackDriveMotor.setDirection(FORWARD);
-        leftFrontDriveMotor.setDirection(REVERSE);
+        leftBackDriveMotor.setDirection(REVERSE);
+        leftFrontDriveMotor.setDirection(FORWARD);
         Encoders.resetMotorEnc(slideLiftMotor);
         Encoders.resetMotorEnc(armLiftMotor1);
         boxMover.setPosition(0.35);
@@ -62,7 +62,7 @@ public class testingTeleOp2 extends BaseRobot {
         intakeTimer = new ElapsedTime();
         armPower=0;
         extensionPosition=0;
-        Devices.slideLiftMotor.setDirection(FORWARD);
+        Devices.slideLiftMotor.setDirection(REVERSE);
     }
 
     @Override
@@ -136,21 +136,23 @@ public class testingTeleOp2 extends BaseRobot {
         if (gamepad1.dpad_down) {
             extensionPosition = 0;
         } else if (gamepad1.dpad_left) {
-            extensionPosition = 850;
+            extensionPosition = 0;
         } else if (gamepad1.dpad_up) {
             extensionPosition = 850;
         }
-        else if (gamepad1.right_bumper&& slideLiftMotor.getCurrentPosition()<900) {
-            slideLiftMotor.setPower(0.25);
+        if (gamepad1.right_bumper&& slideLiftMotor.getCurrentPosition()<900) {
+            slideLiftMotor.setPower(0.2);
             extensionPosition = slideLiftMotor.getCurrentPosition();
         }
         else if (gamepad1.left_bumper && slideLiftMotor.getCurrentPosition()>-20) {
-            slideLiftMotor.setPower(-0.25);
+            slideLiftMotor.setPower(-0.2);
             extensionPosition = slideLiftMotor.getCurrentPosition();
         }
         else {
-            if (slideLiftMotor.getCurrentPosition()>extensionPosition+10) slideLiftMotor.setPower(-0.35);
-            else if (slideLiftMotor.getCurrentPosition()<extensionPosition-10) slideLiftMotor.setPower(0.35);
+            if (slideLiftMotor.getCurrentPosition()>extensionPosition+20)
+                slideLiftMotor.setPower(-0.2);
+            else if (slideLiftMotor.getCurrentPosition()<extensionPosition-20)
+                slideLiftMotor.setPower(0.2);
             else slideLiftMotor.setPower(0);
         }
 
