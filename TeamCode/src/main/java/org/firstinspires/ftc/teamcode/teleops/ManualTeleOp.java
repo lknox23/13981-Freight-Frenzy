@@ -91,7 +91,8 @@ public class ManualTeleOp extends BaseRobot {
         else Control.drive.tankDrive(gamepad2.left_stick_y, gamepad2.right_stick_y);
 
 
-        currentAngle = Control.conversion.armAngleToEncoder(armLiftMotor1.getCurrentPosition());
+
+        currentAngle = Control.conversion.armEncoderToAngle(armLiftMotor1.getCurrentPosition());
 
 
         //intake
@@ -131,7 +132,9 @@ public class ManualTeleOp extends BaseRobot {
             armPower = armController.rotateWithPid(holdPos, currentAngle, 0.1, K_I, K_D)/2;
         } else {
             armPower = -gamepad1.right_stick_y*0.5;
+
             holdPos=Control.conversion.armAngleToEncoder(currentAngle);
+
         }
         Control.motor.moveMotor(Devices.armLiftMotor1, armPower);
         Control.motor.moveMotor(armLiftMotor2, armPower);

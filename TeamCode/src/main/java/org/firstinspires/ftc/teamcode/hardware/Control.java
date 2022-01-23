@@ -148,6 +148,17 @@ public class Control extends Devices {
             rightFrontDriveMotor.setPower(rightFrontPower);
             rightBackDriveMotor.setPower(rightBackPower);
         }
+        public static void weirdTankanumDrive(double rightPwr, double leftPwr, double lateralPwr, double multiplier) {
+            double leftFrontPower = Range.clip(leftPwr - lateralPwr, -1.0, 1.0);
+            double leftBackPower = Range.clip(leftPwr + lateralPwr, -1.0, 1.0);
+            double rightFrontPower = Range.clip(rightPwr - lateralPwr, -1.0, 1.0);
+            double rightBackPower = Range.clip(rightPwr + lateralPwr, -1.0, 1.0);
+
+            leftFrontDriveMotor.setPower(leftFrontPower);
+            leftBackDriveMotor.setPower(leftBackPower*multiplier);
+            rightFrontDriveMotor.setPower(rightFrontPower*multiplier);
+            rightBackDriveMotor.setPower(rightBackPower*multiplier);
+        }
 
 
 
@@ -165,6 +176,14 @@ public class Control extends Devices {
             leftBackDriveMotor.setPower(0);
             rightFrontDriveMotor.setPower(0);
             rightBackDriveMotor.setPower(0);
+        }
+
+        public static void weirdLeftWheel(){
+            double power = .5;
+            leftFrontDriveMotor.setPower(1);
+            leftBackDriveMotor.setPower(power);
+            rightFrontDriveMotor.setPower(power);
+            rightBackDriveMotor.setPower(power);
         }
     }
 
@@ -285,6 +304,28 @@ public class Control extends Devices {
             leftBackDriveMotor.setPower(speed);
             rightFrontDriveMotor.setPower(speed);
             rightBackDriveMotor.setPower(speed);
+
+            while (leftFrontDriveMotor.isBusy() && leftBackDriveMotor.isBusy() && rightFrontDriveMotor.isBusy() && rightBackDriveMotor.isBusy()) {
+            }
+
+            drive.stopPower();
+            return;
+        }
+        public static void weirdMoveWithEncoder(double inches, double speed){
+            double conversion = ConstantVariables.COUNTS_PER_INCH * ConstantVariables.BIAS;
+            int move = (int) (Math.round(inches * conversion));
+
+            leftFrontDriveMotor.setTargetPosition(leftFrontDriveMotor.getCurrentPosition() + move);
+            leftBackDriveMotor.setTargetPosition(leftBackDriveMotor.getCurrentPosition() + move);
+            rightFrontDriveMotor.setTargetPosition(rightFrontDriveMotor.getCurrentPosition() + move);
+            rightBackDriveMotor.setTargetPosition(rightBackDriveMotor.getCurrentPosition() + move);
+
+            Encoders.driveRunToPosition();
+
+            leftFrontDriveMotor.setPower(speed);
+            leftBackDriveMotor.setPower(speed*.5);
+            rightFrontDriveMotor.setPower(speed*.5);
+            rightBackDriveMotor.setPower(speed*.5);
 
             while (leftFrontDriveMotor.isBusy() && leftBackDriveMotor.isBusy() && rightFrontDriveMotor.isBusy() && rightBackDriveMotor.isBusy()) {
             }
