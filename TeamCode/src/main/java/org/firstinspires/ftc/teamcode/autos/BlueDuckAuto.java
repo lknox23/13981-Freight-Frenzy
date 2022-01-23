@@ -17,7 +17,7 @@ import static org.firstinspires.ftc.teamcode.hardware.Devices.spinner;
 public class BlueDuckAuto extends LinearOpMode {
 
     public void runOpMode() {
-        SampleMecanumDrive drive = new SampleTankDrive(hardwareMap);
+        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         Trajectory traj1 = drive.trajectoryBuilder(new Pose2d())
                 .splineTo(new Vector2d(-11, -47), Math.toRadians(90))
                 //above .splineTo needs tuning
@@ -37,23 +37,20 @@ public class BlueDuckAuto extends LinearOpMode {
 
         if (isStopRequested()) return;
 
+        //go to carousel
         drive.followTrajectory(traj1);
         Control.auto.turnWithGyro(10, 1);
-
         Control.auto.moveWithEncoder(-5, 0.5);
+
+        //spin carousel
         Control.auto.spinCarousel(spinner, .35);
         telemetry.addLine("carousel turned");
         telemetry.update();
+
+        //wait until end of auto
         sleep(2000);
 
+        //park in warehouse
         Control.auto.moveWithEncoder(43, 1);
-        /*
-        Encoders.driveResetEncs();
-        waitForStart();
-        moveWithEncoder(-10, 0.7);
-
-        telemetry.addData("left front power: ", leftFrontDriveMotor.getTargetPosition());
-
-         */
 }
 }

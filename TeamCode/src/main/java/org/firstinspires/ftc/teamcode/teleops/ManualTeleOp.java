@@ -15,7 +15,7 @@ import static org.firstinspires.ftc.teamcode.hardware.ConstantVariables.K_I;
 import static org.firstinspires.ftc.teamcode.hardware.Devices.armLiftMotor1;
 import static org.firstinspires.ftc.teamcode.hardware.Devices.armLiftMotor2;
 import static org.firstinspires.ftc.teamcode.hardware.Devices.boxMover;
-import static org.firstinspires.ftc.teamcode.hardware.Devices.intake;
+import static org.firstinspires.ftc.teamcode.hardware.Devices.intakeMotor;
 import static org.firstinspires.ftc.teamcode.hardware.Devices.leftBackDriveMotor;
 import static org.firstinspires.ftc.teamcode.hardware.Devices.leftFrontDriveMotor;
 import static org.firstinspires.ftc.teamcode.hardware.Devices.slideLiftMotor;
@@ -91,16 +91,16 @@ public class ManualTeleOp extends BaseRobot {
         else Control.drive.tankDrive(gamepad2.left_stick_y, gamepad2.right_stick_y);
 
 
-        currentAngle = Control.auto.armEncoderToAngle(armLiftMotor1.getCurrentPosition());
+        currentAngle = Control.conversion.armAngleToEncoder(armLiftMotor1.getCurrentPosition());
 
 
         //intake
         if (gamepad1.left_trigger>0.5) {
-            intake.setPower(1);
+            intakeMotor.setPower(1);
         } else if (gamepad1.right_trigger>0.5) {
-            intake.setPower(-1);
+            intakeMotor.setPower(-1);
         } else {
-            intake.setPower(0);
+            intakeMotor.setPower(0);
         }
 
         //control arm extension
@@ -131,7 +131,7 @@ public class ManualTeleOp extends BaseRobot {
             armPower = armController.rotateWithPid(holdPos, currentAngle, 0.1, K_I, K_D)/2;
         } else {
             armPower = -gamepad1.right_stick_y*0.5;
-            holdPos=Control.auto.armEncoderToAngle(currentAngle);
+            holdPos=Control.conversion.armAngleToEncoder(currentAngle);
         }
         Control.motor.moveMotor(Devices.armLiftMotor1, armPower);
         Control.motor.moveMotor(armLiftMotor2, armPower);
@@ -148,7 +148,7 @@ public class ManualTeleOp extends BaseRobot {
         }
 
         if (dumping) {
-            intake.setPower(0.75); //1
+            intakeMotor.setPower(0.75); //1
             if (currentAngle<intakeRotationThreshold) {
                 boxMover.setPosition(0);
             }
@@ -169,14 +169,11 @@ public class ManualTeleOp extends BaseRobot {
 
         //control spinner
         if (gamepad1.cross)
-            Control.motor.moveMotor(spinner, 0.35); //negative if red
+            spinner.setPower(0.35); //negative if red
         else if (gamepad1.triangle)
-            Control.motor.moveMotor(spinner, -0.35);
+            spinner.setPower( -0.35);
         else
-            Control.motor.moveMotor(spinner, 0);
-
-        //if (intakeTimer.seconds()>1)
-        //    intake.setPower(0);
+            spinner.setPower(0);
 
         telemetry.addData("arm extender encoder reading: ", slideLiftMotor.getCurrentPosition());
         telemetry.addData("current angle: ", currentAngle);
@@ -188,7 +185,7 @@ public class ManualTeleOp extends BaseRobot {
     public void stopDumping() {
         dumping = false;
         //if (currentAngle>50)
-        //intake.setPower(1);
+        //intakeMotor.setPower(1);
         //armMode=1;
     }
 }

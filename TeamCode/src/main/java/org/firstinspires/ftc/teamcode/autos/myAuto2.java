@@ -7,8 +7,9 @@ import static org.firstinspires.ftc.teamcode.hardware.ConstantVariables.K_P;
 import static org.firstinspires.ftc.teamcode.hardware.Devices.armLiftMotor1;
 import static org.firstinspires.ftc.teamcode.hardware.Devices.armLiftMotor2;
 import static org.firstinspires.ftc.teamcode.hardware.Devices.boxMover;
-import static org.firstinspires.ftc.teamcode.hardware.Devices.intake;
+import static org.firstinspires.ftc.teamcode.hardware.Devices.intakeMotor;
 import static org.firstinspires.ftc.teamcode.hardware.Devices.slideLiftMotor;
+import static org.firstinspires.ftc.teamcode.hardware.Devices.spinner;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -104,6 +105,7 @@ public class myAuto2 extends LinearOpMode {
     }
 
     public void deliverDucks() {
+        /*
         ElapsedTime runtime;
         runtime = new ElapsedTime();
         double oldTime;
@@ -114,6 +116,9 @@ public class myAuto2 extends LinearOpMode {
             dT = runtime.milliseconds() - oldTime;
             Control.motor.moveMotor(Devices.spinner, 0.5);
         }
+
+         */
+        Control.auto.spinCarousel(spinner, 0.5);
     }
 
     public void detectDucks() {
@@ -136,28 +141,28 @@ public class myAuto2 extends LinearOpMode {
 
 
     public void placePreloaded(double angle, int extension, double restPower) {
-        double currentAngle = Control.auto.armEncoderToAngle(Encoders.getMotorEnc(armLiftMotor1));
+        double currentAngle = Control.conversion.armEncoderToAngle(Encoders.getMotorEnc(armLiftMotor1));
         double output;
-        int angle;
+        int goalAngle;
 
         Control.pid armController = new Control.pid();
         boxMover.setPosition(1);
 
         if (duckPositionIndex == 0) {
-            angle = 10;
+            goalAngle = 10;
             while (Math.abs(currentAngle - angle) > 5) {
                 output = 0.15;
                 Control.motor.moveMotor(armLiftMotor1, output);
                 Control.motor.moveMotor(armLiftMotor2, output);
-                currentAngle = Control.auto.armEncoderToAngle(Encoders.getMotorEnc(armLiftMotor1));
+                currentAngle = Control.conversion.armEncoderToAngle(Encoders.getMotorEnc(armLiftMotor1));
             }
         } else if (duckPositionIndex == 1) {
-            angle = 30;
+            goalAngle = 30;
             while (Math.abs(currentAngle - angle) > 5) {
                 output = 0.15;
                 Control.motor.moveMotor(armLiftMotor1, output);
                 Control.motor.moveMotor(armLiftMotor2, output);
-                currentAngle = Control.auto.armEncoderToAngle(Encoders.getMotorEnc(armLiftMotor1));
+                currentAngle = Control.conversion.armEncoderToAngle(Encoders.getMotorEnc(armLiftMotor1));
             }
         } else {
             angle = 60;
@@ -165,7 +170,7 @@ public class myAuto2 extends LinearOpMode {
                 output = 0.15;
                 Control.motor.moveMotor(armLiftMotor1, output);
                 Control.motor.moveMotor(armLiftMotor2, output);
-                currentAngle = Control.auto.armEncoderToAngle(Encoders.getMotorEnc(armLiftMotor1));
+                currentAngle = Control.conversion.armEncoderToAngle(Encoders.getMotorEnc(armLiftMotor1));
             }
 
 
@@ -190,7 +195,7 @@ public class myAuto2 extends LinearOpMode {
             boxMover.setPosition(0);
 
             while (opModeIsActive() && timer.seconds() < 1) {
-                currentAngle = Control.auto.armEncoderToAngle(Encoders.getMotorEnc(armLiftMotor1));
+                currentAngle = Control.conversion.armEncoderToAngle(Encoders.getMotorEnc(armLiftMotor1));
                 output = armController.rotateWithPid(angle, (currentAngle), K_P, K_I, K_D);
                 Control.motor.moveMotor(armLiftMotor1, output);
                 if (slideLiftMotor.getCurrentPosition() < 100) slideLiftMotor.setPower(0.2);
@@ -203,7 +208,7 @@ public class myAuto2 extends LinearOpMode {
 
 
         while (opModeIsActive()&&timer.seconds() < 3){
-            currentAngle = Control.auto.armEncoderToAngle(Encoders.getMotorEnc(armLiftMotor1));
+            currentAngle = Control.conversion.armEncoderToAngle(Encoders.getMotorEnc(armLiftMotor1));
             output = armController.rotateWithPid(angle, (currentAngle), K_P, K_I, K_D);
             Control.motor.moveMotor(armLiftMotor2, output/2);
             Control.motor.moveMotor(armLiftMotor1, output/2);
@@ -212,17 +217,17 @@ public class myAuto2 extends LinearOpMode {
 
             if (timer.seconds()>2) {
                 boxMover.setPosition(0.05);
-                intake.setPower(0.5);
+                intakeMotor.setPower(0.5);
             }
         }
 
 
 
-        intake.setPower(0);
+        intakeMotor.setPower(0);
 
         boxMover.setPosition(0.32);
         while (opModeIsActive()&&timer.seconds() < 5){
-            currentAngle = Control.auto.armEncoderToAngle(Encoders.getMotorEnc(armLiftMotor1));
+            currentAngle = Control.conversion.armEncoderToAngle(Encoders.getMotorEnc(armLiftMotor1));
             output = armController.rotateWithPid(angle, (currentAngle), K_P, K_I, K_D);
             Control.motor.moveMotor(armLiftMotor2, output/2);
             Control.motor.moveMotor(armLiftMotor1, output/2);

@@ -77,7 +77,7 @@ public class SamplePipeline extends OpenCvPipeline {
     }
 
     public boolean inRegion1() {
-        return avg1<detectionThreshold;
+        return getAvg1()<detectionThreshold;
     }
 
     public boolean inRegion2() {

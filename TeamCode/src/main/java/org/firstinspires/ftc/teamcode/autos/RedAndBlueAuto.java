@@ -6,7 +6,9 @@ import static org.firstinspires.ftc.teamcode.hardware.ConstantVariables.K_I;
 import static org.firstinspires.ftc.teamcode.hardware.ConstantVariables.K_P;
 import static org.firstinspires.ftc.teamcode.hardware.Devices.armLiftMotor1;
 import static org.firstinspires.ftc.teamcode.hardware.Devices.boxMover;
+import static org.firstinspires.ftc.teamcode.hardware.Devices.outtake;
 import static org.firstinspires.ftc.teamcode.hardware.Devices.slideLiftMotor;
+import static org.firstinspires.ftc.teamcode.hardware.Devices.spinner;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -87,6 +89,7 @@ public class RedAndBlueAuto extends LinearOpMode {
     }
 
     public void deliverDucks() {
+        /*
         ElapsedTime runtime;
         runtime = new ElapsedTime();
         double oldTime;
@@ -97,6 +100,10 @@ public class RedAndBlueAuto extends LinearOpMode {
             dT = runtime.milliseconds() - oldTime;
             Control.motor.moveMotor(Devices.spinner, 0.5);
         }
+
+         */
+        Control.auto.spinCarousel(spinner, 0.5);
+
     }
 
     public void detectDucks() {
@@ -118,7 +125,8 @@ public class RedAndBlueAuto extends LinearOpMode {
     }
 
     public void placePreloaded() {
-        double currentAngle = Control.auto.armEncoderToAngle(Encoders.getMotorEnc(armLiftMotor1));
+        /*
+        double currentAngle = Control.conversion.armEncoderToAngle(Encoders.getMotorEnc(armLiftMotor1));
         double output;
         int angle;
         if (duckPositionIndex==0) angle = 0;
@@ -130,7 +138,7 @@ public class RedAndBlueAuto extends LinearOpMode {
         boxMover.setPosition(1);
 
         while (opModeIsActive() && currentAngle<angle-5){
-            currentAngle = Control.auto.armEncoderToAngle(Encoders.getMotorEnc(armLiftMotor1));
+            currentAngle = Control.conversion.armEncoderToAngle(Encoders.getMotorEnc(armLiftMotor1));
             output = armController.rotateWithPid(angle, (currentAngle), K_P, K_I, K_D);
             Control.motor.moveMotor(armLiftMotor1, output);
             if (slideLiftMotor.getCurrentPosition()<100) slideLiftMotor.setPower(0.2);
@@ -141,10 +149,37 @@ public class RedAndBlueAuto extends LinearOpMode {
         boxMover.setPosition(0);
 
         while (opModeIsActive()&&timer.seconds() < 1 ){
-            currentAngle = Control.auto.armEncoderToAngle(Encoders.getMotorEnc(armLiftMotor1));
+            currentAngle = Control.conversion.armEncoderToAngle(Encoders.getMotorEnc(armLiftMotor1));
             output = armController.rotateWithPid(angle, (currentAngle), K_P, K_I, K_D);
             Control.motor.moveMotor(armLiftMotor1, output);
             if (slideLiftMotor.getCurrentPosition()<100) slideLiftMotor.setPower(0.2);
+            }
+         */
+        int armHeight;
+        if (duckPositionIndex==0) armHeight = 0;
+        else if (duckPositionIndex==1) armHeight = 100;
+        else armHeight= 300;
+
+        while (opModeIsActive() && (armLiftMotor1.getCurrentPosition()<armHeight || slideLiftMotor.getCurrentPosition()<800)) {
+            if (armLiftMotor1.getCurrentPosition()<armHeight )
+                Control.motor.moveMotor(armLiftMotor1, 0.2);
+            if (slideLiftMotor.getCurrentPosition()<800)
+                Control.motor.moveMotor(slideLiftMotor, 0.2);
+            boxMover.setPosition(.15);
+        }
+
+
+        ElapsedTime timer = new ElapsedTime();
+        telemetry.addLine("point reached");
+        outtake.setPosition(1);
+        while (timer.seconds()<1) {}
+        armHeight = 10;
+        while (opModeIsActive() && (armLiftMotor1.getCurrentPosition()>armHeight || slideLiftMotor.getCurrentPosition()>10)) {
+            if (armLiftMotor1.getCurrentPosition()>armHeight )
+                Control.motor.moveMotor(armLiftMotor1, -0.2);
+            if (slideLiftMotor.getCurrentPosition()>10)
+                Control.motor.moveMotor(slideLiftMotor, -0.2);
+            boxMover.setPosition(.32);
         }
     }
 

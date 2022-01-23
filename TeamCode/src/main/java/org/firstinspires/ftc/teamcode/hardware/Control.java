@@ -7,7 +7,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
-import org.firstinspires.ftc.robotcore.external.Const;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
@@ -31,10 +30,11 @@ public class Control extends Devices {
         // -1.0 backwards
 
         public static boolean setPositionInLoop(DcMotor motor, double power, double targetPosition){
-            if(motor.getCurrentPosition() >= targetPosition){
+            if(motor.getCurrentPosition() <= targetPosition){
                 moveMotor(motor, power);
                 return false;
             }
+
             else{
                 moveMotor(motor, 0);
                 return true;
@@ -136,7 +136,7 @@ public class Control extends Devices {
         }
 
         // tankDrive + mecanum drive
-        /*
+
         public static void tankanumDrive(double rightPwr, double leftPwr, double lateralPwr) {
             double leftFrontPower = Range.clip(leftPwr - lateralPwr, -1.0, 1.0);
             double leftBackPower = Range.clip(leftPwr + lateralPwr, -1.0, 1.0);
@@ -149,7 +149,7 @@ public class Control extends Devices {
             rightBackDriveMotor.setPower(rightBackPower);
         }
 
-         */
+
 
         public static void turnWithEncoder(double power) {
             Encoders.driveRunUsingEncoder();
@@ -200,6 +200,13 @@ public class Control extends Devices {
             while (timer.seconds()<3) {
             }
             motor.setPower(0);
+        }
+        public static void spinCarousel (CRServo servo, double velocity) {
+            ElapsedTime timer = new ElapsedTime();
+            servo.setPower(velocity);
+            while (timer.seconds()<3) {
+            }
+            servo.setPower(0);
         }
 
 //        double power = 1.0;
@@ -532,9 +539,25 @@ public class Control extends Devices {
             double armHeight = ConstantVariables.K_PPIN_ARM * encoder;
             return Math.asin(armHeight/ConstantVariables.K_ARM_LENGTH);
         }
-        public static double armAngleToEncoder(int angle){
+        public static double armAngleToEncoder(double angle){
             return Math.sin(angle)/ConstantVariables.K_PPIN_ARM;
         }
+
+    }
+
+    public static class macros {
+        public static void armToLevel3() {
+
+        }
+
+        public static void armToShared() {
+
+        }
+
+        public static void dropPieceAndRetract() {
+
+        }
+
 
     }
 }

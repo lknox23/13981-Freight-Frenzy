@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.autos;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -20,6 +21,7 @@ import org.firstinspires.ftc.teamcode.hardware.*;
 
 import java.util.List;
 
+@Disabled
 @Autonomous
 
 public class SampleAutoGyro extends LinearOpMode {

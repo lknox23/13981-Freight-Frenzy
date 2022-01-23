@@ -31,7 +31,7 @@ public class Devices {
         Devices.leftFrontDriveMotor = hardwareMap.get(DcMotor.class, "frontLeft");
         Devices.rightFrontDriveMotor = hardwareMap.get(DcMotor.class, "frontRight");
         Devices.armLiftMotor1 = hardwareMap.get(DcMotor.class, "armLift1");
-        Devices.armLiftMotor2 = hardwareMap.get(DcMotor.class, "armLift2");
+        //Devices.armLiftMotor2 = hardwareMap.get(DcMotor.class, "armLift2");
 
         Devices.slideLiftMotor = hardwareMap.get(DcMotor.class, "slide");
         Devices.spinner = hardwareMap.get(CRServo.class, "spinner");
@@ -59,7 +59,7 @@ public class Devices {
 
 //        Devices.armLiftMotor = hardwareMap.get(DcMotor.class, "armLiftMotor");
         Devices.armLiftMotor1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        Devices.armLiftMotor2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //Devices.armLiftMotor2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         slideLiftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 //        Devices.armAdjustServo = hardwareMap.get(Servo.class,"armAdjustServo");
 

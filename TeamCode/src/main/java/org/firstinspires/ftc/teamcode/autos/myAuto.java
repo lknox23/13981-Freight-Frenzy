@@ -1,4 +1,4 @@
-
+//OBSOLETE
 package org.firstinspires.ftc.teamcode.autos;
 
 
@@ -14,6 +14,7 @@ import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.*;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -35,6 +36,7 @@ import org.openftc.easyopencv.OpenCvPipeline;
 import org.openftc.easyopencv.OpenCvWebcam;
 
 @Autonomous
+@Disabled
 public class myAuto extends LinearOpMode {
 
 
@@ -150,7 +152,7 @@ public class myAuto extends LinearOpMode {
     }
 
     public void placePreloaded() {
-        double currentAngle = Control.auto.armEncoderToAngle(Encoders.getMotorEnc(armLiftMotor1));
+        double currentAngle = Control.conversion.armEncoderToAngle(Encoders.getMotorEnc(armLiftMotor1));
         double output;
         int angle;
         if (duckPositionIndex==0) angle = 0;
@@ -162,7 +164,7 @@ public class myAuto extends LinearOpMode {
         boxMover.setPosition(1);
 
         while (opModeIsActive() && currentAngle<angle-5){
-            currentAngle = Control.auto.armEncoderToAngle(Encoders.getMotorEnc(armLiftMotor1));
+            currentAngle = Control.conversion.armEncoderToAngle(Encoders.getMotorEnc(armLiftMotor1));
             output = armController.rotateWithPid(angle, (currentAngle), K_P, K_I, K_D);
             Control.motor.moveMotor(armLiftMotor1, output);
             if (slideLiftMotor.getCurrentPosition()<100) slideLiftMotor.setPower(0.2);
@@ -173,7 +175,7 @@ public class myAuto extends LinearOpMode {
         boxMover.setPosition(0);
 
         while (opModeIsActive()&&timer.seconds() < 1 ){
-            currentAngle = Control.auto.armEncoderToAngle(Encoders.getMotorEnc(armLiftMotor1));
+            currentAngle = Control.conversion.armEncoderToAngle(Encoders.getMotorEnc(armLiftMotor1));
             output = armController.rotateWithPid(angle, (currentAngle), K_P, K_I, K_D);
             Control.motor.moveMotor(armLiftMotor1, output);
             if (slideLiftMotor.getCurrentPosition()<100) slideLiftMotor.setPower(0.2);
@@ -187,6 +189,7 @@ public class myAuto extends LinearOpMode {
     }
 
     public void deliverDuck() {
+        /*
         ElapsedTime runtime;
         runtime = new ElapsedTime();
         double oldTime;
@@ -197,6 +200,8 @@ public class myAuto extends LinearOpMode {
             dT = runtime.milliseconds() - oldTime;
             Control.motor.moveMotor(Devices.spinner, 0.5);
         }
+
+         */
     }
 
     public void park(){

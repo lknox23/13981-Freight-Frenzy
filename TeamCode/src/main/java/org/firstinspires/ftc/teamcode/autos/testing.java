@@ -9,17 +9,15 @@ import org.firstinspires.ftc.teamcode.hardware.Control;
 import org.firstinspires.ftc.teamcode.hardware.Devices;
 import org.firstinspires.ftc.teamcode.hardware.Encoders;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.linearOpMode;
 import static org.firstinspires.ftc.teamcode.hardware.ConstantVariables.K_D;
 import static org.firstinspires.ftc.teamcode.hardware.ConstantVariables.K_I;
 import static org.firstinspires.ftc.teamcode.hardware.ConstantVariables.K_P;
 import static org.firstinspires.ftc.teamcode.hardware.Devices.armLiftMotor1;
 import static org.firstinspires.ftc.teamcode.hardware.Devices.armLiftMotor2;
 import static org.firstinspires.ftc.teamcode.hardware.Devices.boxMover;
-import static org.firstinspires.ftc.teamcode.hardware.Devices.intake;
+import static org.firstinspires.ftc.teamcode.hardware.Devices.intakeMotor;
 import static org.firstinspires.ftc.teamcode.hardware.Devices.slideLiftMotor;
-//import static org.firstinspires.ftc.teamcode.hardware.Devices.support;
+
 
 @Config
 @Autonomous
@@ -47,7 +45,7 @@ public class testing extends LinearOpMode {
     }
 
     public void placePreloaded(double angle, int extension, double restPower) {
-        double currentAngle = Control.auto.armEncoderToAngle(Encoders.getMotorEnc(armLiftMotor1));
+        double currentAngle = Control.conversion.armEncoderToAngle(Encoders.getMotorEnc(armLiftMotor1));
         double output;
         //int angle;
         /*
@@ -62,7 +60,7 @@ public class testing extends LinearOpMode {
         boxMover.setPosition(1);
 
         while (opModeIsActive() && currentAngle<angle-5){
-            currentAngle = Control.auto.armEncoderToAngle(Encoders.getMotorEnc(armLiftMotor1));
+            currentAngle = Control.conversion.armEncoderToAngle(Encoders.getMotorEnc(armLiftMotor1));
             output = armController.rotateWithPid(angle, (currentAngle), K_P, K_I, K_D);
             Control.motor.moveMotor(armLiftMotor2, output/2);
             Control.motor.moveMotor(armLiftMotor1, output/2);
@@ -76,7 +74,7 @@ public class testing extends LinearOpMode {
         boxMover.setPosition(0);
 
         while (opModeIsActive()&&timer.seconds() < 3){
-            currentAngle = Control.auto.armEncoderToAngle(Encoders.getMotorEnc(armLiftMotor1));
+            currentAngle = Control.conversion.armEncoderToAngle(Encoders.getMotorEnc(armLiftMotor1));
             output = armController.rotateWithPid(angle, (currentAngle), K_P, K_I, K_D);
             Control.motor.moveMotor(armLiftMotor2, output/2);
             Control.motor.moveMotor(armLiftMotor1, output/2);
@@ -85,7 +83,7 @@ public class testing extends LinearOpMode {
         }
 
         while (opModeIsActive()&&timer.seconds() < 5){
-            currentAngle = Control.auto.armEncoderToAngle(Encoders.getMotorEnc(armLiftMotor1));
+            currentAngle = Control.conversion.armEncoderToAngle(Encoders.getMotorEnc(armLiftMotor1));
             output = armController.rotateWithPid(angle, (currentAngle), K_P, K_I, K_D);
             Control.motor.moveMotor(armLiftMotor2, output/2);
             Control.motor.moveMotor(armLiftMotor1, output/2);

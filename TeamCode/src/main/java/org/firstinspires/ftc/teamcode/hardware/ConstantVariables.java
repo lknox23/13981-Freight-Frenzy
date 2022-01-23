@@ -25,12 +25,12 @@ public class ConstantVariables {
     public static final double K_PPTURN_DRIVE = K_PPIN_DRIVE * K_TURN_CIRCUMFERENCE;
     public static final double K_PPDEG_DRIVE = K_PPTURN_DRIVE / 360;
 
-    public static final int K_PPR_ARM = 0; //placeholder values
-    public static final double K_ARM_WHEEL_DIA = 0; //placeholder values
-    public static final double K_ARM_LENGTH = 5; //in inches
+    public static final int K_PPR_ARM = 385;
+    public static final double K_ARM_WHEEL_DIA = 1.5; //placeholder values
+    public static final double K_ARM_LENGTH = 3.5; //in inches; distance from pivot to actuator
 
     public static final double K_ARM_WHEEL_CIRCUMFERENCE = K_ARM_WHEEL_DIA * Math.PI; //
-    public static final double K_PPIN_ARM = K_PPR_ARM / K_ARM_WHEEL_CIRCUMFERENCE; // //encoder pulses per incg
+    public static final double K_PPIN_ARM = K_PPR_ARM / K_ARM_WHEEL_CIRCUMFERENCE; // //encoder pulses per inch
 
 
     public static final double K_MAX_CLIBER = 1465;
@@ -53,12 +53,11 @@ public class ConstantVariables {
 
     public static final double K_ARM_ROTATE_PPR = 288; //encoder counts per rotation of arm rotator
 
-    public static final double K_ARM_GEAR_RATIO = 1.0/2;
+    public static final double K_ARM_GEAR_RATIO = 1;
 
     public static final double K_P = 0.03;
     public static final double K_I = 0.00;
     public static final double K_D = 0.05;
 
     public static final double K_INTEGRAL_RESET_THRESHOLD = 0.1;
-
 }

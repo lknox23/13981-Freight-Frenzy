@@ -31,7 +31,7 @@ public class PidSample extends BaseRobot {
     public void loop() {
         super.loop();
 
-        currentAngle = Control.auto.armEncoderToAngle(Encoders.getMotorEnc(armLiftMotor1));
+        currentAngle = Control.conversion.armEncoderToAngle(Encoders.getMotorEnc(armLiftMotor1));
 
         if(gamepad1.dpad_up) {
             //if (currentAngle<70)
@@ -70,8 +70,7 @@ public class PidSample extends BaseRobot {
         telemetry.addData("p1: ", p1);
         telemetry.addData("i: ", i);
         telemetry.addData("d: ", d);
-        telemetry.addData("arm 1 angle: ", Control.auto.armEncoderToAngle(Encoders.getMotorEnc(armLiftMotor1)));
-        telemetry.addData("arm 2 angle: ", Control.auto.armEncoderToAngle(Encoders.getMotorEnc(armLiftMotor2)));
+        telemetry.addData("arm 1 angle: ", Control.conversion.armEncoderToAngle(Encoders.getMotorEnc(armLiftMotor1)));
         telemetry.addData("output: ", output);
     }
 }
